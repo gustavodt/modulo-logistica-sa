@@ -36,7 +36,7 @@ public class FaixaFrete {
 	
 	@NotNull(message = "O valor de cada km é obrigtório")
 	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
-    @Digits(message = "O valor do km deve possuir o formato 'N.NN'", integer = 1, fraction = 2)
+    @Digits(message = "O valor do km deve possuir o formato 'NN.NN'", integer = 12, fraction = 2)
 	@Column(name = "valorKm")
 	private BigDecimal valorKm;
 	
