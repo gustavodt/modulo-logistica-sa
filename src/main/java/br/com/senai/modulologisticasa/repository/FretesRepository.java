@@ -49,7 +49,10 @@ public interface FretesRepository {
 	public Frete buscarPorIdPedido(Integer idPedido);
 	
 	@Modifying
-	@Query(value = "UPDATE Frete f SET f.status = :status WHERE f.id = :id")
+	@Query(value = 
+			"UPDATE Frete f "
+			+ "SET f.status = :status "
+			+ "WHERE f.id = :id")
 	public void atualizarPor(Integer id, Integer status);
 	
 }

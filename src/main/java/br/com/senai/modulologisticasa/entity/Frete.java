@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
@@ -65,5 +66,10 @@ public class Frete {
 	@NotNull(message = "O id do entregador é orbrigatório")
 	@Column(name = "idDoEntregador")
 	private Integer idDoEntregador;
+	
+	@Transient
+	public boolean isPersistido() {
+		return getId() != null && getId() > 0;
+	}
 	
 }
