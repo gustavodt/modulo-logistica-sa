@@ -6,6 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpMethods;
+import org.apache.camel.model.rest.RestBindingMode;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +28,19 @@ public class ToGoogleMatrix extends RouteBuilder implements Serializable{
 
 	@Override
 	public void configure() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}	
+		/*
+	from("direct:").doTry()
+	.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
+	.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
+	.process(new Processor() {
+		public void process(Exchange exchange) throws Exception {
+			Localizacao localizacao = exchange.getMessage().getBody(Localizao.class);
+			JSONObject localizacaoJson = new JSONObject();
+			
+		}
+	}
+	*/
+	}
 
 	
 	/*public void configure() throws Exception {
