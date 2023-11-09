@@ -1,4 +1,4 @@
-package br.com.senai.cardapiosmktplaceapi.exception.handler;
+package br.com.senai.modulologisticasa.exception.handler;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,7 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import br.com.senai.cardapiosmktplaceapi.exception.ErroDaApi;
+import br.com.senai.modulologisticasa.exception.ErroDaApi;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

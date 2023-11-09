@@ -1,4 +1,4 @@
-package br.com.senai.cardapiosmktplaceapi.exception;
+package br.com.senai.modulologisticasa.exception;
 
 public class AutorizacaoException extends RuntimeException {
 
