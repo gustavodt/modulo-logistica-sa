@@ -1,12 +1,11 @@
-package br.com.senai.cardapiosmktplaceapi.exception.handler;
-
+package br.com.senai.modulologisticasa.exception.handler;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-import br.com.senai.cardapiosmktplaceapi.exception.ErroDaApi;
+import br.com.senai.modulologisticasa.exception.ErroDaApi;
 
 @Component
 public class ErrorConverter {

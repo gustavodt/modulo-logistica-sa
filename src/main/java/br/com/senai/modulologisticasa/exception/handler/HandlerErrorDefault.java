@@ -1,4 +1,4 @@
-package br.com.senai.cardapiosmktplaceapi.exception.handler;
+package br.com.senai.modulologisticasa.exception.handler;
 
 import java.util.Map;
 
@@ -22,11 +22,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 
-import br.com.senai.cardapiosmktplaceapi.exception.BusinessException;
-import br.com.senai.cardapiosmktplaceapi.exception.ConverterException;
-import br.com.senai.cardapiosmktplaceapi.exception.ErroDaApi;
-import br.com.senai.cardapiosmktplaceapi.exception.IntegracaoException;
-import br.com.senai.cardapiosmktplaceapi.exception.RegistroNaoEncontradoException;
+import br.com.senai.modulologisticasa.exception.BusinessException;
+import br.com.senai.modulologisticasa.exception.ConverterException;
+import br.com.senai.modulologisticasa.exception.ErroDaApi;
+import br.com.senai.modulologisticasa.exception.IntegracaoException;
+import br.com.senai.modulologisticasa.exception.RegistroNaoEncontradoException;
 import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
