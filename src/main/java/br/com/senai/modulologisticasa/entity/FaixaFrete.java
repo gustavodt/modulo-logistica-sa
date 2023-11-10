@@ -16,29 +16,29 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+/*@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "faixasFrete")
-@Entity(name = "FaixaFrete")
+@Entity(name = "FaixaFrete")*/
 public class FaixaFrete {
 	
-	@Id
+	/*@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)*/
 	@EqualsAndHashCode.Include
 	private Integer id;
 	
 	@NotNull(message = "O valor mínimo do km é obrigatório")
-	@Column(name = "kmMin")
+	//@Column(name = "kmMin")
 	private Integer kmMin;
 	
 	@NotNull(message = "O valor máximo do km é obrigatório")
-	@Column(name = "kmMax")
+	//@Column(name = "kmMax")
 	private Integer kmMax;
 	
 	@NotNull(message = "O valor de cada km é obrigtório")
 	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
     @Digits(message = "O valor do km deve possuir o formato 'NN.NN'", integer = 12, fraction = 2)
-	@Column(name = "valorKm")
+	//@Column(name = "valorKm")
 	private BigDecimal valorKm;
 	
 	@Transient

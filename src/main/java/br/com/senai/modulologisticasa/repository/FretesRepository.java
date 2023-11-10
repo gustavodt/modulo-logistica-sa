@@ -1,17 +1,15 @@
 package br.com.senai.modulologisticasa.repository;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.Frete;
 
-@Repository
+//@Repository
+//public interface FretesRepository  extends JpaRepository<Frete, Integer>{
 public interface FretesRepository {
 	
-	@Query(value = 
+	/*@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
 			+ "WHERE EXTRACT(YEAR FROM f.dataMovimento) = :ano "
@@ -53,6 +51,6 @@ public interface FretesRepository {
 			"UPDATE Frete f "
 			+ "SET f.status = :status "
 			+ "WHERE f.id = :id")
-	public void atualizarPor(Integer id, Integer status);
+	public void atualizarPor(Integer id, Integer status);*/
 	
 }

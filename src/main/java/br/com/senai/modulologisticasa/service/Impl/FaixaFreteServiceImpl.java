@@ -8,16 +8,17 @@ import br.com.senai.modulologisticasa.service.FaixaFreteService;
 
 public class FaixaFreteServiceImpl implements FaixaFreteService {
 
-	private FaixasFreteRepository repository;
+	//private FaixasFreteRepository repository;
 	
 	public FaixaFrete inserir(FaixaFrete faixaFrete) {
 		
-		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
+		/*for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
 			verificarConflitoFaixasFrete(faixaFrete, faixaFreteEscolhida);
 		}
 		
 		FaixaFrete faixaSalva = repository.save(faixaFrete);
-		return repository.buscarPorId(faixaSalva.getId());
+		return repository.buscarPorId(faixaSalva.getId());*/
+		return null;
 	}
 	
 	private void verificarConflitoFaixasFrete(FaixaFrete faixaFreteAntiga, FaixaFrete faixaFreteNova) {
@@ -36,12 +37,13 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 	@Override
 	public FaixaFrete buscarPor(Integer id) {
 		
-		FaixaFrete faixaEncontrada = repository.buscarPorId(id);
+		/*FaixaFrete faixaEncontrada = repository.buscarPorId(id);
 		
 		Preconditions.checkNotNull(faixaEncontrada, 
 				"Não existe opção para o id informado");
 		
-		return faixaEncontrada;
+		return faixaEncontrada;*/
+		return null;
 	}
 
 }
