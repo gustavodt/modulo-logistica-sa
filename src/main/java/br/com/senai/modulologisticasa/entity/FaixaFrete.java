@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -36,8 +37,13 @@ public class FaixaFrete {
 	
 	@NotNull(message = "O valor de cada km é obrigtório")
 	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
-    @Digits(message = "O valor do km deve possuir o formato 'N.NN'", integer = 1, fraction = 2)
+    @Digits(message = "O valor do km deve possuir o formato 'NN.NN'", integer = 12, fraction = 2)
 	@Column(name = "valorKm")
 	private BigDecimal valorKm;
+	
+	@Transient
+	public boolean isPersistido() {
+		return getId() != null && getId() > 0;
+	}
 	
 }

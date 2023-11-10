@@ -2,6 +2,7 @@ package br.com.senai.modulologisticasa.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -46,5 +47,12 @@ public interface FretesRepository {
 			+ "FROM Frete f "
 			+ "WHERE f.idPedido = :id ")
 	public Frete buscarPorIdPedido(Integer idPedido);
+	
+	@Modifying
+	@Query(value = 
+			"UPDATE Frete f "
+			+ "SET f.status = :status "
+			+ "WHERE f.id = :id")
+	public void atualizarPor(Integer id, Integer status);
 	
 }
