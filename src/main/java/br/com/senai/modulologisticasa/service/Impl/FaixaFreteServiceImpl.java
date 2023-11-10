@@ -1,10 +1,14 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
+import java.math.BigDecimal;
+
 import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.repository.FaixasFreteRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class FaixaFreteServiceImpl implements FaixaFreteService {
 
@@ -42,6 +46,21 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 				"Não existe opção para o id informado");
 		
 		return faixaEncontrada;
+	}
+
+	@Override
+	public FaixaFrete buscarPor(BigDecimal distanciaPercorrida) {
+		
+		FaixaFrete faixaFrete = new FaixaFrete();
+		
+		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
+			if (BigDecimal.valueOf(faixaFreteEscolhida.getKmMin()).compareTo(distanciaPercorrida) == 1 
+					&& BigDecimal.valueOf(faixaFreteEscolhida.getKmMax()).compareTo(distanciaPercorrida) == -1) {
+				faixaFrete = faixaFreteEscolhida;
+			}
+		}
+		
+		return faixaFrete;
 	}
 
 }
