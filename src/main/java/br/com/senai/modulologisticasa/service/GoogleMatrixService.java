@@ -1,8 +1,9 @@
 package br.com.senai.modulologisticasa.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.validation.annotation.Validated;
 
-import br.com.senai.modulologisticasa.dto.GoogleMatrix;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -10,12 +11,13 @@ import jakarta.validation.constraints.Size;
 public interface GoogleMatrixService {
 
 
-	public GoogleMatrix buscarDistancia(
-			@Size(max = 9, message = "O cep de origem não pode conter mais de 9 caracteres")
+	public BigDecimal buscarDistancia(
+			@Size(max = 9, message = "O tamanho do cep deve conter 9 caracteres")
 			@NotBlank(message = "O cep de origem é obrigatório")
-			Integer origem,
-			@Size(max = 9, message = "O cep de destino não pode conter mais de 9 caracteres")
+			String origem,
+			@Size(max = 9, message = "O tamanho do cep deve conter 9 caracteres")
 			@NotBlank(message = "O cep de destino é obrigatório")
-			Integer destino
+			String destino
 			);
+
 }
