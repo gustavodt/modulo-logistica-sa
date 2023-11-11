@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Service
-public class FreteImpl implements FreteService {
+public class FreteServiceImpl implements FreteService {
 
 	@Autowired
 	private FretesRepository repository;

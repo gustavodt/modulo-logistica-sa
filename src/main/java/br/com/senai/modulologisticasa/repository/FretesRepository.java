@@ -2,14 +2,16 @@ package br.com.senai.modulologisticasa.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
 
 @Repository
-public interface FretesRepository {
+public interface FretesRepository extends JpaRepository<FaixaFrete, Integer>{
 	
 	@Query(value = 
 			"SELECT f "

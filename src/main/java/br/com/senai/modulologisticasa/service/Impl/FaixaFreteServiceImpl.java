@@ -2,14 +2,15 @@ package br.com.senai.modulologisticasa.service.Impl;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
+
 import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.repository.FaixasFreteRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
+@Service
 public class FaixaFreteServiceImpl implements FaixaFreteService {
 
 	private FaixasFreteRepository repository;
@@ -17,7 +18,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 	public FaixaFrete inserir(FaixaFrete faixaFrete) {
 		
 		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
-			verificarConflitoFaixasFrete(faixaFrete, faixaFreteEscolhida);
+			verificarConflitoFaixasFrete(faixaFreteEscolhida, faixaFrete);
 		}
 		
 		FaixaFrete faixaSalva = repository.save(faixaFrete);
