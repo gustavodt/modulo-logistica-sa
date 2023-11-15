@@ -12,10 +12,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Service
-public class FreteImpl implements FreteService {
+public class FreteServiceImpl implements FreteService {
 
-	/*@Autowired
-	private FretesRepository repository;*/
+	@Autowired
+	private FretesRepository repository;
 
 	@Override
 	public Frete salvar(@NotNull(message = "O Frete não pode ser nulo") 
@@ -31,11 +31,11 @@ public class FreteImpl implements FreteService {
 			@NotNull(message = "O novo status não pode ser nulo") 
 			Integer status) {
 		
-		/*Frete freteEncontrado = repository.buscarPorId(id);
+		Frete freteEncontrado = repository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não existe Frete vinculado ao ID informado");
 		Preconditions.checkArgument(freteEncontrado.getStatus() != status,
 				"O status já esta salvo para o Frete");
-		this.repository.atualizarPor(id, status);*/
+		this.repository.atualizarPor(id, status);
 		
 	}
 
@@ -44,10 +44,9 @@ public class FreteImpl implements FreteService {
 			@Positive(message = "O id para busca deve ser positivo") 
 			@NotNull(message = "O id é obrigatório") 
 			Integer id) {
-		/*Frete freteEncontrado = repository.buscarPorId(id);
+		Frete freteEncontrado = repository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não foi encontrado frete para o id informado");
-		return freteEncontrado;*/
-		return null;
+		return freteEncontrado;
 	}
 	
 	

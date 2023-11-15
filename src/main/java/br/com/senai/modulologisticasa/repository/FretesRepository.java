@@ -1,15 +1,19 @@
 package br.com.senai.modulologisticasa.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.Frete;
+import jakarta.transaction.Transactional;
 
-//@Repository
-//public interface FretesRepository  extends JpaRepository<Frete, Integer>{
-public interface FretesRepository {
+@Repository
+public interface FretesRepository  extends JpaRepository<Frete, Integer>{
 	
-	/*@Query(value = 
+	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
 			+ "WHERE EXTRACT(YEAR FROM f.dataMovimento) = :ano "
@@ -36,21 +40,23 @@ public interface FretesRepository {
 	
 	@Query(value = 
 			"SELECT f "
-			+ "FROM Frete f "
-			+ "WHERE f.id = :id ")
-	public Frete buscarPorId(Integer id);
+					+ "FROM Frete f "
+					+ "WHERE f.idPedido = :idPedido ")
+	public List<Frete> listarPorIdPedido(Integer idPedido);
 	
 	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
-			+ "WHERE f.idPedido = :id ")
-	public Frete buscarPorIdPedido(Integer idPedido);
+			+ "WHERE f.id = :id ")
+	public Frete buscarPorId(Integer id);
+	
 	
 	@Modifying
+	@Transactional
 	@Query(value = 
 			"UPDATE Frete f "
 			+ "SET f.status = :status "
 			+ "WHERE f.id = :id")
-	public void atualizarPor(Integer id, Integer status);*/
+	public void atualizarPor(Integer id, Integer status);
 	
 }

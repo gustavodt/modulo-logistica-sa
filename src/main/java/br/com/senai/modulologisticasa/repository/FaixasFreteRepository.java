@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 
-//@Repository
-//public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer>{
-public interface FaixasFreteRepository{
+@Repository
+public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer>{
 	
-	/*@Query(value = 
+	@Query(value = 
 			"SELECT ff "
 			+ "FROM FaixaFrete ff ")
 	public List<FaixaFrete> listarTodos();
@@ -21,6 +20,6 @@ public interface FaixasFreteRepository{
 			"SELECT ff "
 			+ "FROM FaixaFrete ff "
 			+ "WHERE ff.id = :id ")
-	public FaixaFrete buscarPorId(Integer id);*/
+	public FaixaFrete buscarPorId(Integer id);
 	
 }
