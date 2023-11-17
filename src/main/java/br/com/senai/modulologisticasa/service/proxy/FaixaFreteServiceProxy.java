@@ -9,18 +9,20 @@ import br.com.senai.modulologisticasa.service.Impl.FaixaFreteServiceImpl;
 
 public class FaixaFreteServiceProxy implements FaixaFreteService{
 	
-	@Autowired
+	/*@Autowired
 	@Qualifier(value = "faixaFreteServiceImpl")
-	FaixaFreteServiceImpl service;
+	FaixaFreteServiceImpl service;*/
 	
 	@Override
 	public FaixaFrete inserir(FaixaFrete frete) {
-		return service.inserir(frete);
+		//return service.inserir(frete);
+		return null;
 	}
 
 	@Override
 	public FaixaFrete buscarPor(Integer id) {
-		return service.buscarPor(id);
+		//return service.buscarPor(id);
+		return null;
 	}
 	
 }

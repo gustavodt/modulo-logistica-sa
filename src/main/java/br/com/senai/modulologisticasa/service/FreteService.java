@@ -4,6 +4,8 @@ import org.springframework.validation.annotation.Validated;
 
 
 import br.com.senai.modulologisticasa.entity.Frete;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -15,9 +17,10 @@ public interface FreteService {
 			Frete frete);
 	
 	public void atualizarStatusPor(
-			@Positive(message = "O id para atualização deve ser positivo")
 			@NotNull(message = "O id é obrigatório")
 			Integer id,
+			@Min(value = 3)
+			@Max(value = 5)
 			@NotNull(message = "O novo status não pode ser nulo")
 			Integer status);	
 	
