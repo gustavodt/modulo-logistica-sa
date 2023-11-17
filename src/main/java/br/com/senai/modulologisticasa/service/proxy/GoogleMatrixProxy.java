@@ -23,8 +23,10 @@ public class GoogleMatrixProxy implements GoogleMatrixService{
 		JSONObject distanciaJson = getGoogleMatrix.requestBody(
 				"direct:buscarDistancia", requestBody, JSONObject.class);
 		
-		return BigDecimal.valueOf(distanciaJson.getJSONArray("rows").getJSONObject(0)
+		BigDecimal distancia = BigDecimal.valueOf(distanciaJson.getJSONArray("rows").getJSONObject(0)
 				.getJSONArray("elements").getJSONObject(0).getJSONObject("distance").getInt("value"));
+		
+		return distancia;
 	}
 	
 	
