@@ -1,7 +1,5 @@
 package br.com.senai.modulologisticasa;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -10,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.modulologisticasa.entity.FaixaFrete;
+import br.com.senai.modulologisticasa.repository.FaixasFreteRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
 
@@ -28,16 +26,19 @@ public class InitApp {
 	@Autowired
 	@Qualifier("freteServiceImpl")
 	FreteService serviceF;
+
+	@Autowired
+	 private FaixasFreteRepository repositoryFF;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			
 			//FaixaFrete faixaFrete = new FaixaFrete();
-			//faixaFrete.setKmMin(5);
-			//faixaFrete.setKmMax(11);
-			//faixaFrete.setValorKm(BigDecimal.valueOf(12.0));
-			//serviceFF.inserir(faixaFrete);
+			//faixaFrete.setKmMin(15);
+			//faixaFrete.setKmMax(20);
+			//faixaFrete.setValorKm(BigDecimal.valueOf(15.0));
+			//serviceFF.salvar(faixaFrete);
 			//System.out.println(faixaFrete);
 			
 			//Frete frete = new Frete();
@@ -49,6 +50,7 @@ public class InitApp {
 			//frete.setValorKm(BigDecimal.valueOf(6.0));
 			//frete.setValorTotal(BigDecimal.valueOf(48.0));
 			//frete.setTempoEntregaMinutos(10);
+			//serviceF.atualizarStatusPor(4, 4);
 			//System.out.println(frete);
 			
 		};

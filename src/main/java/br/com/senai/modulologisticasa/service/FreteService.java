@@ -1,7 +1,8 @@
 package br.com.senai.modulologisticasa.service;
 
-import org.springframework.validation.annotation.Validated;
+import java.util.List;
 
+import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.modulologisticasa.entity.Frete;
 import jakarta.validation.constraints.Max;
@@ -28,5 +29,16 @@ public interface FreteService {
 			@Positive(message = "O id para busca deve ser positivo")
 			@NotNull(message = "O id é obrigatório")
 			Integer id);
+	
+	public List<Frete> listarPor(
+			@Positive(message = "O ano para listagem deve ser positivo")
+			@NotNull(message = "O ano é obrigatório")
+			Integer ano,
+			@Positive(message = "O mes para listagem deve ser positivo")
+			@NotNull(message = "O mes é obrigatório")
+			Integer mes,
+			@Positive(message = "O status para listagem deve ser positivo")
+			@NotNull(message = "O status é obrigatório")
+			Integer status);
 	
 }

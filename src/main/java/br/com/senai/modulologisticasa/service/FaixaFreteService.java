@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 @Validated
 public interface FaixaFreteService {
 	
-	public FaixaFrete inserir(
+	public FaixaFrete salvar(
 			@Valid 
 			@NotNull(message = "O frete não pode ser nulo")
 			FaixaFrete frete);

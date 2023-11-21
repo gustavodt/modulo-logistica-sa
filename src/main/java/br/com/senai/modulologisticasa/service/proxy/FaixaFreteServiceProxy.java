@@ -5,24 +5,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
-import br.com.senai.modulologisticasa.service.Impl.FaixaFreteServiceImpl;
+import br.com.senai.modulologisticasa.service.impl.FaixaFreteServiceImpl;
 
 public class FaixaFreteServiceProxy implements FaixaFreteService{
 	
-	/*@Autowired
+	@Autowired
 	@Qualifier(value = "faixaFreteServiceImpl")
-	FaixaFreteServiceImpl service;*/
+	FaixaFreteServiceImpl service;
 	
 	@Override
-	public FaixaFrete inserir(FaixaFrete frete) {
-		//return service.inserir(frete);
-		return null;
+	public FaixaFrete salvar(FaixaFrete frete) {
+		return service.salvar(frete);
 	}
 
 	@Override
 	public FaixaFrete buscarPor(Integer id) {
-		//return service.buscarPor(id);
-		return null;
+		return service.buscarPor(id);
 	}
 	
 }

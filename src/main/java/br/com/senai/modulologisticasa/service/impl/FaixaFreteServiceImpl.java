@@ -1,4 +1,4 @@
-package br.com.senai.modulologisticasa.service.Impl;
+package br.com.senai.modulologisticasa.service.impl;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 	@Autowired
 	private FaixasFreteRepository repository;
 	
-	public FaixaFrete inserir(FaixaFrete faixaFrete) {
+	public FaixaFrete salvar(FaixaFrete faixaFrete) {
 		
 		FaixaFrete faixaFreteAnterior = repository.validarKmMin(faixaFrete.getKmMin());
 		
@@ -29,9 +29,9 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 				verificarConflitoFaixasFrete(faixaFreteEscolhida, faixaFrete);				
 			}
 			FaixaFrete faixaSalva = repository.save(faixaFrete);
-			return repository.buscarPorId(faixaSalva.getId());			
+			return repository.buscarPorId(faixaSalva.getId());	
 		} else {
-			throw new RuntimeException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
+			throw new IllegalArgumentException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
 		}
 		
 	}
@@ -46,7 +46,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 			|| (faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
 					&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax())) {
 		} else {
-			throw new RuntimeException("Faixas de frete em conflito");
+			throw new IllegalArgumentException("Faixas de frete em conflito");
 		};
 	}
 	

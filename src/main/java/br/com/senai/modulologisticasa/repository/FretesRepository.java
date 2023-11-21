@@ -11,7 +11,7 @@ import br.com.senai.modulologisticasa.entity.Frete;
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface FretesRepository  extends JpaRepository<Frete, Integer>{
+public interface FretesRepository extends JpaRepository<Frete, Integer>{
 	
 	@Query(value = 
 			"SELECT f "

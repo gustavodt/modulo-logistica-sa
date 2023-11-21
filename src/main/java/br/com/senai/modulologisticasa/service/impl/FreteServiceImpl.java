@@ -1,4 +1,6 @@
-package br.com.senai.modulologisticasa.service.Impl;
+package br.com.senai.modulologisticasa.service.impl;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,8 +10,6 @@ import com.google.common.base.Preconditions;
 import br.com.senai.modulologisticasa.entity.Frete;
 import br.com.senai.modulologisticasa.repository.FretesRepository;
 import br.com.senai.modulologisticasa.service.FreteService;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 @Service
 public class FreteServiceImpl implements FreteService {
@@ -39,6 +39,13 @@ public class FreteServiceImpl implements FreteService {
 		Frete freteEncontrado = repository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não foi encontrado frete para o id informado");
 		return freteEncontrado;
+	}
+
+	@Override
+	public List<Frete> listarPor(Integer ano, Integer mes, Integer status) {
+		List<Frete> fretes = repository.listarPor(ano, mes, status);
+		Preconditions.checkNotNull(fretes, "Fretes não encontrados");
+		return fretes;
 	}
 	
 	
