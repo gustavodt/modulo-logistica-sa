@@ -24,15 +24,6 @@
 	</properties>
 	<dependencies>
 		<dependency>
-<<<<<<< HEAD
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>5.3.1</version> <!-- Use a versão mais recente disponível -->
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-=======
->>>>>>> 5b67eac61221eff818cdf392a280ab544ed13c5e
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<scope>test</scope>
