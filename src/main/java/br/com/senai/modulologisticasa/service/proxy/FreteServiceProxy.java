@@ -1,5 +1,7 @@
 package br.com.senai.modulologisticasa.service.proxy;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,8 +42,10 @@ public class FreteServiceProxy implements FreteService{
 			Integer id) {
 		return service.buscarPor(id);
 	}
-	
-	
+	@Override
+	public List<Frete> listarPor(Integer id, Integer mes, Integer status) {
+		return service.listarPor(id, mes, status);
+	}
 	
 	
 }

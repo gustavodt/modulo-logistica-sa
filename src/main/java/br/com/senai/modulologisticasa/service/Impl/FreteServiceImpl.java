@@ -1,5 +1,7 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,9 @@ public class FreteServiceImpl implements FreteService {
 		return freteEncontrado;
 	}
 	
-	
+	@Override
+	public List<Frete> listarPor(Integer id,Integer mes, Integer status) {
+		return repository.listarPor(id, mes, status);
+	}
 	
 }
