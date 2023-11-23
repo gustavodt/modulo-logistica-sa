@@ -8,19 +8,25 @@ import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 
-//@Repository
-//public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer>{
-public interface FaixasFreteRepository{
+@Repository
+public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer>{
 	
-	/*@Query(value = 
+	@Query(value = 
 			"SELECT ff "
-			+ "FROM FaixaFrete ff ")
+			+ "FROM FaixaFrete ff "
+			+ "ORDER BY ff.id")
 	public List<FaixaFrete> listarTodos();
 	
 	@Query(value = 
 			"SELECT ff "
 			+ "FROM FaixaFrete ff "
+			+ "WHERE ff.kmMax = :kmMin")
+	public FaixaFrete validarKmMin(Integer kmMin);
+	
+	@Query(value = 
+			"SELECT ff "
+			+ "FROM FaixaFrete ff "
 			+ "WHERE ff.id = :id ")
-	public FaixaFrete buscarPorId(Integer id);*/
+	public FaixaFrete buscarPorId(Integer id);
 	
 }
