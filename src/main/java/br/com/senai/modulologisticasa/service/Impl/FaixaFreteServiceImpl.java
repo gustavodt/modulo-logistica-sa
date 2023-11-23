@@ -1,13 +1,10 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
-<<<<<<< HEAD
 import java.math.BigDecimal;
 
-=======
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> feature/service
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -23,11 +20,6 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 	private FaixasFreteRepository repository;
 	
 	public FaixaFrete inserir(FaixaFrete faixaFrete) {
-		
-<<<<<<< HEAD
-		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
-			verificarConflitoFaixasFrete(faixaFreteEscolhida, faixaFrete);
-=======
 		FaixaFrete faixaFreteAnterior = repository.validarKmMin(faixaFrete.getKmMin());
 		
 		if (faixaFreteAnterior != null) {
@@ -41,9 +33,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 			return repository.buscarPorId(faixaSalva.getId());			
 		} else {
 			throw new RuntimeException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
->>>>>>> feature/service
 		}
-		
 	}
 	
 	private void verificarConflitoFaixasFrete(FaixaFrete faixaFreteAntiga, FaixaFrete faixaFreteNova) {

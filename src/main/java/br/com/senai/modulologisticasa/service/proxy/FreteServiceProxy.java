@@ -14,15 +14,14 @@ import jakarta.validation.constraints.Positive;
 @Service
 public class FreteServiceProxy implements FreteService{
 
-	/*@Autowired
+	@Autowired
 	@Qualifier("freteServiceImpl")
-	private FreteService service;*/
+	private FreteService service;
 
 	@Override
 	public Frete salvar(@NotNull(message = "O Frete não pode ser nulo") Frete frete) {
 		
-		//return service.salvar(frete);
-		return null;
+		return service.salvar(frete);
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class FreteServiceProxy implements FreteService{
 			Integer id,
 			@NotNull(message = "O novo status não pode ser nulo")
 			Integer status) {
-		//this.service.atualizarStatusPor(id, status);		
+		this.service.atualizarStatusPor(id, status);		
 	}
 
 	@Override
@@ -40,8 +39,7 @@ public class FreteServiceProxy implements FreteService{
 			@Positive(message = "O id para busca deve ser positivo")
 			@NotNull(message = "O id é obrigatório") 
 			Integer id) {
-		//return service.buscarPor(id);
-		return null;
+		return service.buscarPor(id);
 	}
 	@Override
 	public List<Frete> listarPor(Integer id, Integer mes, Integer status) {

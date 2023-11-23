@@ -129,8 +129,4 @@ public class MapConverter implements Serializable{
 		return false;
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> feature/service

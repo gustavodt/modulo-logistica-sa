@@ -12,11 +12,7 @@ import br.com.senai.modulologisticasa.entity.Frete;
 import jakarta.transaction.Transactional;
 
 @Repository
-<<<<<<< HEAD
-public interface FretesRepository extends JpaRepository<FaixaFrete, Integer>{
-=======
-public interface FretesRepository  extends JpaRepository<Frete, Integer>{
->>>>>>> feature/service
+public interface FretesRepository extends JpaRepository<Frete, Integer>{
 	
 	@Query(value = 
 			"SELECT f "
