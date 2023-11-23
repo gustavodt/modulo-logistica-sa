@@ -9,9 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import jakarta.transaction.Transactional;
 
 @Repository
+<<<<<<< HEAD
 public interface FretesRepository extends JpaRepository<FaixaFrete, Integer>{
+=======
+public interface FretesRepository  extends JpaRepository<Frete, Integer>{
+>>>>>>> feature/service
 	
 	@Query(value = 
 			"SELECT f "
@@ -40,17 +45,19 @@ public interface FretesRepository extends JpaRepository<FaixaFrete, Integer>{
 	
 	@Query(value = 
 			"SELECT f "
-			+ "FROM Frete f "
-			+ "WHERE f.id = :id ")
-	public Frete buscarPorId(Integer id);
+					+ "FROM Frete f "
+					+ "WHERE f.idPedido = :idPedido ")
+	public List<Frete> listarPorIdPedido(Integer idPedido);
 	
 	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
-			+ "WHERE f.idPedido = :id ")
-	public Frete buscarPorIdPedido(Integer idPedido);
+			+ "WHERE f.id = :id ")
+	public Frete buscarPorId(Integer id);
+	
 	
 	@Modifying
+	@Transactional
 	@Query(value = 
 			"UPDATE Frete f "
 			+ "SET f.status = :status "

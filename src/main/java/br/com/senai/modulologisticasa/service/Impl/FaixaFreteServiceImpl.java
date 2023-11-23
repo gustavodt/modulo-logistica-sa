@@ -1,7 +1,13 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 
+=======
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> feature/service
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -13,29 +19,45 @@ import br.com.senai.modulologisticasa.service.FaixaFreteService;
 @Service
 public class FaixaFreteServiceImpl implements FaixaFreteService {
 
+	@Autowired
 	private FaixasFreteRepository repository;
 	
 	public FaixaFrete inserir(FaixaFrete faixaFrete) {
 		
+<<<<<<< HEAD
 		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
 			verificarConflitoFaixasFrete(faixaFreteEscolhida, faixaFrete);
+=======
+		FaixaFrete faixaFreteAnterior = repository.validarKmMin(faixaFrete.getKmMin());
+		
+		if (faixaFreteAnterior != null) {
+			
+			List<FaixaFrete> faixasFrete = repository.listarTodos();
+			
+			for (FaixaFrete faixaFreteEscolhida : faixasFrete) {
+				verificarConflitoFaixasFrete(faixaFreteEscolhida, faixaFrete);				
+			}
+			FaixaFrete faixaSalva = repository.save(faixaFrete);
+			return repository.buscarPorId(faixaSalva.getId());			
+		} else {
+			throw new RuntimeException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
+>>>>>>> feature/service
 		}
 		
-		FaixaFrete faixaSalva = repository.save(faixaFrete);
-		return repository.buscarPorId(faixaSalva.getId());
 	}
 	
 	private void verificarConflitoFaixasFrete(FaixaFrete faixaFreteAntiga, FaixaFrete faixaFreteNova) {
-		Preconditions.checkArgument(
-				(faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
-						&& faixaFreteAntiga.getKmMax() < faixaFreteNova.getKmMax())
-				|| (faixaFreteAntiga.getKmMin() > faixaFreteNova.getKmMin()
-						&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax())
-				|| (faixaFreteAntiga.getKmMin() > faixaFreteNova.getKmMin()
-						&& faixaFreteAntiga.getKmMax() < faixaFreteNova.getKmMax())
-				|| (faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
-						&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax()),
-				"Faixas de frete em conflito");
+		if ((faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
+				&& faixaFreteAntiga.getKmMax() < faixaFreteNova.getKmMax())
+			|| (faixaFreteAntiga.getKmMin() > faixaFreteNova.getKmMin()
+					&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax())
+			|| (faixaFreteAntiga.getKmMin() > faixaFreteNova.getKmMin()
+					&& faixaFreteAntiga.getKmMax() < faixaFreteNova.getKmMax())
+			|| (faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
+					&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax())) {
+		} else {
+			throw new RuntimeException("Faixas de frete em conflito");
+		};
 	}
 	
 	@Override

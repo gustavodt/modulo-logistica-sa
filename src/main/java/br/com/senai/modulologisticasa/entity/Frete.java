@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -49,13 +50,14 @@ public class Frete {
 	@Column(name = "valorTotal")
 	private BigDecimal valorTotal;
 	
+	@Positive
 	@NotNull(message = "O id do pedido é obrigatório")
-	@Column(name = "idDoPedido")
-	private Integer idDoPedido;
+	@Column(name = "idPedido")
+	private Integer idPedido;
 	
 	@NotNull(message = "A data do movimento é obrigatório")
-	@Column(name = "dataDoMovimento")
-	private LocalDateTime dataDoMovimento;
+	@Column(name = "dataMovimento")
+	private LocalDateTime dataMovimento;
 	
 	@Min(value = 3)
 	@Max(value = 5)
@@ -63,9 +65,15 @@ public class Frete {
 	@Column(name = "status")
 	private Integer status;
 	
+	@Positive
 	@NotNull(message = "O id do entregador é orbrigatório")
-	@Column(name = "idDoEntregador")
-	private Integer idDoEntregador;
+	@Column(name = "idEntregador")
+	private Integer idEntregador;
+	
+	@Positive
+	@NotNull(message = "O tempo de entrega do pedido é obrigatorio")
+	@Column(name = "tempoEntregaMinutos")
+	private Integer tempoEntregaMinutos;
 	
 	@Transient
 	public boolean isPersistido() {
