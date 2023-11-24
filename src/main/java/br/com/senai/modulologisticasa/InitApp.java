@@ -8,12 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-<<<<<<< HEAD
 import br.com.senai.modulologisticasa.service.proxy.CardapioMktplaceProxy;
-=======
+import br.com.senai.modulologisticasa.service.proxy.FreteServiceProxy;
+import br.com.senai.modulologisticasa.service.proxy.GoogleMatrixProxy;
+import br.com.senai.modulologisticasa.integration.route.GetGoogleMatrix;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
->>>>>>> b4fe49da74e22353f02bad884cadc1c7d6387f5a
 
 @SpringBootApplication
 public class InitApp {
@@ -22,11 +22,12 @@ public class InitApp {
 		SpringApplication.run(InitApp.class, args);		
 	}
 	
-	@Autowired
-<<<<<<< HEAD
-	private CardapioMktplaceProxy cardapioMktplace;
+//	@Autowired
+//	private CardapioMktplaceProxy cardapioMktplace;
 	
-=======
+	@Autowired
+	private FreteServiceProxy freteService;
+	
 	@Qualifier("faixaFreteServiceImpl")
 	FaixaFreteService serviceFF;
 	
@@ -34,14 +35,14 @@ public class InitApp {
 	@Qualifier("freteServiceImpl")
 	FreteService serviceF;
 	
->>>>>>> b4fe49da74e22353f02bad884cadc1c7d6387f5a
+	@Autowired
+	private GoogleMatrixProxy getGoogleMatrix;
+	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			
-<<<<<<< HEAD
-			System.out.println(cardapioMktplace.buscarRestaurantePor("rest", "39"));
-=======
+//			System.out.println(cardapioMktplace.buscarRestaurantePor("rest", "39"));
 			//FaixaFrete faixaFrete = new FaixaFrete();
 			//faixaFrete.setKmMin(5);
 			//faixaFrete.setKmMax(11);
@@ -59,8 +60,7 @@ public class InitApp {
 			//frete.setValorTotal(BigDecimal.valueOf(48.0));
 			//frete.setTempoEntregaMinutos(10);
 			//System.out.println(frete);
-			
->>>>>>> b4fe49da74e22353f02bad884cadc1c7d6387f5a
+			System.out.println(getGoogleMatrix.buscarDistancia("88715000", "88701021"));
 		};
 	}
 

@@ -1,6 +1,7 @@
 package br.com.senai.modulologisticasa.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -11,7 +12,7 @@ import jakarta.validation.constraints.Size;
 public interface GoogleMatrixService {
 
 
-	public BigDecimal buscarDistancia(
+	public List<BigDecimal> buscarDistancia(
 			@Size(max = 9, message = "O tamanho do cep deve conter 9 caracteres")
 			@NotBlank(message = "O cep de origem é obrigatório")
 			String origem,

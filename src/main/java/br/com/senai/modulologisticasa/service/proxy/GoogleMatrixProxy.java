@@ -1,6 +1,8 @@
 package br.com.senai.modulologisticasa.service.proxy;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.camel.ProducerTemplate;
 import org.json.JSONObject;
@@ -16,17 +18,25 @@ public class GoogleMatrixProxy implements GoogleMatrixService{
 	private ProducerTemplate getGoogleMatrix;
 
 	@Override
-	public BigDecimal buscarDistancia(String origem, String destino) {
+	public List<BigDecimal> buscarDistancia(String origem, String destino) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("cepDeOrigem", origem);
 		requestBody.put("cepDeDestino", destino);
 		JSONObject distanciaJson = getGoogleMatrix.requestBody(
 				"direct:buscarDistancia", requestBody, JSONObject.class);
 		
+		List<BigDecimal> distanciaTempo = new ArrayList<>();
+		
 		BigDecimal distancia = BigDecimal.valueOf(distanciaJson.getJSONArray("rows").getJSONObject(0)
 				.getJSONArray("elements").getJSONObject(0).getJSONObject("distance").getInt("value"));
 		
-		return distancia;
+		BigDecimal tempo = BigDecimal.valueOf(distanciaJson.getJSONArray("rows").getJSONObject(0)
+				.getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getInt("value"));
+		
+		distanciaTempo.add(distancia);
+		distanciaTempo.add(tempo);
+		
+		return distanciaTempo;
 	}
 	
 	
