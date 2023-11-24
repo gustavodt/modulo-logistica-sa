@@ -14,7 +14,7 @@ public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer
 	@Query(value = 
 			"SELECT ff "
 			+ "FROM FaixaFrete ff "
-			+ "ORDER BY ff.id")
+			+ "ORDER BY ff.kmMin")
 	public List<FaixaFrete> listarTodos();
 	
 	@Query(value = 

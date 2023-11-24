@@ -1,7 +1,5 @@
 package br.com.senai.modulologisticasa.entity;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +40,7 @@ public class FaixaFrete {
 	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
     @Digits(message = "O valor do km deve possuir o formato 'NN.NN'", integer = 2, fraction = 2)
 	@Column(name = "valorKm")
-	private BigDecimal valorKm;
+	private Integer valorKm;
 	
 	@Transient
 	public boolean isPersistido() {

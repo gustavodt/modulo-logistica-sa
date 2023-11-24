@@ -8,12 +8,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+<<<<<<< HEAD
 import br.com.senai.modulologisticasa.service.proxy.CardapioMktplaceProxy;
 import br.com.senai.modulologisticasa.service.proxy.FreteServiceProxy;
 import br.com.senai.modulologisticasa.service.proxy.GoogleMatrixProxy;
 import br.com.senai.modulologisticasa.integration.route.GetGoogleMatrix;
+=======
+>>>>>>> feature/service
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
+import br.com.senai.modulologisticasa.service.proxy.FreteServiceProxy;
+import br.com.senai.modulologisticasa.service.proxy.GoogleMatrixProxy;
 
 @SpringBootApplication
 public class InitApp {
@@ -36,12 +41,22 @@ public class InitApp {
 	FreteService serviceF;
 	
 	@Autowired
+<<<<<<< HEAD
 	private GoogleMatrixProxy getGoogleMatrix;
 	
+=======
+	private GoogleMatrixProxy googleMatrix;
+	
+	public Integer cepOrigem = 88715000;
+	
+	public Integer cepDestino = 88701021;
+		
+>>>>>>> feature/service
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			
+<<<<<<< HEAD
 //			System.out.println(cardapioMktplace.buscarRestaurantePor("rest", "39"));
 			//FaixaFrete faixaFrete = new FaixaFrete();
 			//faixaFrete.setKmMin(5);
@@ -61,6 +76,11 @@ public class InitApp {
 			//frete.setTempoEntregaMinutos(10);
 			//System.out.println(frete);
 			System.out.println(getGoogleMatrix.buscarDistancia("88715000", "88701021"));
+=======
+			//System.out.println(googleMatrix.buscarDistancia("88715000", "88701045"));
+			System.out.println(serviceF.calcularValorFrete(BigDecimal.valueOf(10)));
+				
+>>>>>>> feature/service
 		};
 	}
 

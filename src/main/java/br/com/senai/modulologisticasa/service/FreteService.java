@@ -1,10 +1,15 @@
 package br.com.senai.modulologisticasa.service;
 
+<<<<<<< HEAD
 
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
+=======
+import java.math.BigDecimal;
+>>>>>>> feature/service
 
+import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.modulologisticasa.entity.Frete;
 import jakarta.validation.constraints.Max;
@@ -33,6 +38,7 @@ public interface FreteService {
 			@NotNull(message = "O id é obrigatório")
 			Integer id);
 	
+<<<<<<< HEAD
 	public List<Frete> listarPor(
 			@Positive(message = "O id para busca deve ser positivo")
 			@NotNull(message = "O id é obrigatório")
@@ -42,5 +48,8 @@ public interface FreteService {
 			Integer status,
 			@Size(min= 1, max= 12, message = "O mês deve ser entre 1 e 12")
 			Integer mes);
+=======
+	public BigDecimal calcularValorFrete(BigDecimal distancia);
+>>>>>>> feature/service
 	
 }

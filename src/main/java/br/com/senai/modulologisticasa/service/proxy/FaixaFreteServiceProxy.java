@@ -28,11 +28,14 @@ public class FaixaFreteServiceProxy implements FaixaFreteService{
 	@Override
 	public FaixaFrete buscarPor(Integer id) {
 		return service.buscarPor(id);
+<<<<<<< HEAD
 	}
 
 	@Override
 	public FaixaFrete buscarPor(BigDecimal distanciaPercorrida) {
 		return service.buscarPor(distanciaPercorrida);
+=======
+>>>>>>> feature/service
 	}
 	
 }

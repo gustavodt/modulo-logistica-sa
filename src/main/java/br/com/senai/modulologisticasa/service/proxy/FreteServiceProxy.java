@@ -1,6 +1,10 @@
 package br.com.senai.modulologisticasa.service.proxy;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.math.BigDecimal;
+>>>>>>> feature/service
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,9 +45,16 @@ public class FreteServiceProxy implements FreteService{
 			Integer id) {
 		return service.buscarPor(id);
 	}
+<<<<<<< HEAD
 	@Override
 	public List<Frete> listarPor(Integer id, Integer mes, Integer status) {
 		return service.listarPor(id, mes, status);
+=======
+
+	@Override
+	public BigDecimal calcularValorFrete(BigDecimal distancia) {
+		return service.calcularValorFrete(distancia);
+>>>>>>> feature/service
 	}
 	
 	
