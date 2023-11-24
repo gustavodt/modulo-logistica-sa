@@ -1,7 +1,8 @@
 package br.com.senai.modulologisticasa.service;
 
-import org.springframework.validation.annotation.Validated;
+import java.math.BigDecimal;
 
+import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.modulologisticasa.entity.Frete;
 import jakarta.validation.constraints.Max;
@@ -28,5 +29,7 @@ public interface FreteService {
 			@Positive(message = "O id para busca deve ser positivo")
 			@NotNull(message = "O id é obrigatório")
 			Integer id);
+	
+	public BigDecimal calcularValorFrete(BigDecimal distancia);
 	
 }
