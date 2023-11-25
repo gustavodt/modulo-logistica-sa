@@ -32,13 +32,13 @@ public class Frete {
 	@EqualsAndHashCode.Include
 	private Integer id;
 	
-	@DecimalMin(value = "0.0", inclusive = false, message = "O valor total deve ser positivo")
+	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
     @Digits(message = "O valor do km deve possuir o formato 'N.NN'", integer = 1, fraction = 2)
-	@NotNull(message = "O valor do quilometro é obrigatório")
+	@NotNull(message = "O valor do km é obrigatório")
 	@Column(name = "valorKm")
 	private BigDecimal valorKm;
 	
-	@DecimalMin(value = "0.0", inclusive = false, message = "O valor total deve ser positivo")
+	@DecimalMin(value = "0.0", inclusive = false, message = "O valor da distância deve ser positivo")
     @Digits(message = "O valor da distancia deve possuir o formato 'NN.NN'", integer = 2, fraction = 2)
 	@NotNull(message = "O valor da distancia é obrigatória")
 	@Column(name = "distancia")

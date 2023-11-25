@@ -1,9 +1,6 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
-<<<<<<< HEAD
-=======
 import java.math.BigDecimal;
->>>>>>> feature/service
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,6 @@ import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
-import br.com.senai.modulologisticasa.repository.FaixasFreteRepository;
 import br.com.senai.modulologisticasa.repository.FretesRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
@@ -25,8 +21,6 @@ public class FreteServiceImpl implements FreteService {
 	@Autowired
 	private FretesRepository fretesRepository;
 	
-	@Autowired
-	private FaixasFreteRepository faixasFreteRepository;
 	
 	@Autowired
 	@Qualifier("faixaFreteServiceProxy")
@@ -57,28 +51,16 @@ public class FreteServiceImpl implements FreteService {
 	}
 
 	@Override
-	public BigDecimal calcularValorFrete(BigDecimal distancia) {
-		List<FaixaFrete> faixasFrete = faixasFreteRepository.listarTodos();
-		BigDecimal valorTotal = null;
-		for (FaixaFrete faixaFrete : faixasFrete) {
-			if ((distancia.compareTo(BigDecimal.valueOf(faixaFrete.getKmMin())) == 0
-				|| distancia.compareTo(BigDecimal.valueOf(faixaFrete.getKmMin())) == 1)
-					&& distancia.compareTo(BigDecimal.valueOf(faixaFrete.getKmMax())) == -1) {
-				valorTotal = distancia.multiply(BigDecimal.valueOf(faixaFrete.getValorKm()));
-				return valorTotal;
-			} else {
-				if (faixasFrete.get(faixasFrete.size() - 1).getKmMin() == faixaFrete.getKmMin()) {
-					valorTotal = distancia.multiply(BigDecimal.valueOf(faixaFrete.getValorKm()));
-					return valorTotal;
-				}
-			}
-		}
-		throw new RuntimeException("Não foi possívle calcular o valor do frete");
+	public BigDecimal calcularValorFrete(BigDecimal distancia, FaixaFrete faixaFrete) {
+		BigDecimal valorTotal = distancia.multiply(BigDecimal.valueOf(faixaFrete.getValorKm()));
+		return valorTotal;
 	}
 	
 	@Override
 	public List<Frete> listarPor(Integer id,Integer mes, Integer status) {
-		return repository.listarPor(id, mes, status);
+		List<Frete> fretes = fretesRepository.listarPor(id, mes, status);
+		Preconditions.checkNotNull(fretes, "Lista de fretes vazia");
+		return fretes;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package br.com.senai.modulologisticasa.service.Impl;
 
 import java.math.BigDecimal;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,16 +63,19 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 	@Override
 	public FaixaFrete buscarPor(BigDecimal distanciaPercorrida) {
 		
-		FaixaFrete faixaFrete = new FaixaFrete();
-		
-		for (FaixaFrete faixaFreteEscolhida : repository.listarTodos()) {
-			if (BigDecimal.valueOf(faixaFreteEscolhida.getKmMin()).compareTo(distanciaPercorrida) == 1 
-					&& BigDecimal.valueOf(faixaFreteEscolhida.getKmMax()).compareTo(distanciaPercorrida) == -1) {
-				faixaFrete = faixaFreteEscolhida;
+		List<FaixaFrete> faixasFrete = repository.listarTodos();
+		for (FaixaFrete faixaFrete : faixasFrete) {
+			if ((distanciaPercorrida.compareTo(BigDecimal.valueOf(faixaFrete.getKmMin())) == 0
+				|| distanciaPercorrida.compareTo(BigDecimal.valueOf(faixaFrete.getKmMin())) == 1)
+					&& distanciaPercorrida.compareTo(BigDecimal.valueOf(faixaFrete.getKmMax())) == -1) {
+				return faixaFrete;
+			} else {
+				if (faixasFrete.get(faixasFrete.size() - 1).getKmMin() == faixaFrete.getKmMin()) {
+					throw new RuntimeException("A distância está fora das faizas cadastradas");
+				}
 			}
 		}
-		
-		return faixaFrete;
+		throw new RuntimeException("Não foi possível encontrar faixa de frete");
 	}
 
 }

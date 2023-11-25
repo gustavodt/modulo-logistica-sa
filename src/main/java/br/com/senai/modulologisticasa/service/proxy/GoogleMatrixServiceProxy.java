@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.senai.modulologisticasa.service.GoogleMatrixService;
 
 @Service 
-public class GoogleMatrixProxy implements GoogleMatrixService{
+public class GoogleMatrixServiceProxy implements GoogleMatrixService{
 
 	@Autowired
 	private ProducerTemplate getGoogleMatrix;

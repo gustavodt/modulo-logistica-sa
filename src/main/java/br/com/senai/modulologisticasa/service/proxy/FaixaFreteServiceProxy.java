@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.Impl.FaixaFreteServiceImpl;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
 
 @Service
 public class FaixaFreteServiceProxy implements FaixaFreteService{
@@ -28,14 +25,11 @@ public class FaixaFreteServiceProxy implements FaixaFreteService{
 	@Override
 	public FaixaFrete buscarPor(Integer id) {
 		return service.buscarPor(id);
-<<<<<<< HEAD
 	}
 
 	@Override
 	public FaixaFrete buscarPor(BigDecimal distanciaPercorrida) {
 		return service.buscarPor(distanciaPercorrida);
-=======
->>>>>>> feature/service
 	}
 	
 }

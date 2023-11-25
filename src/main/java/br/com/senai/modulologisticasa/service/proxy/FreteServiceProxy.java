@@ -1,61 +1,67 @@
 package br.com.senai.modulologisticasa.service.proxy;
 
-<<<<<<< HEAD
-import java.util.List;
-=======
 import java.math.BigDecimal;
->>>>>>> feature/service
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.com.senai.modulologisticasa.dto.ValorDoFrete;
+import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import br.com.senai.modulologisticasa.service.GoogleMatrixService;
 
 @Service
 public class FreteServiceProxy implements FreteService{
 
 	@Autowired
 	@Qualifier("freteServiceImpl")
-	private FreteService service;
+	private FreteService freteService;
+	
+	@Autowired
+	@Qualifier("faixaFreteServiceImpl")
+	private FaixaFreteService faixaFreteService;
+	
+	@Autowired
+	@Qualifier("googleMatrixServiceProxy")
+	private GoogleMatrixService googleMatrixService;
 
 	@Override
-	public Frete salvar(@NotNull(message = "O Frete não pode ser nulo") Frete frete) {
+	public Frete salvar(Frete frete) {
 		
-		return service.salvar(frete);
+		return freteService.salvar(frete);
 	}
 
 	@Override
-	public void atualizarStatusPor(
-			@Positive(message = "O id para atualização deve ser positivo")
-			@NotNull(message = "O id é obrigatório") 
-			Integer id,
-			@NotNull(message = "O novo status não pode ser nulo")
-			Integer status) {
-		this.service.atualizarStatusPor(id, status);		
+	public void atualizarStatusPor(Integer id, Integer status) {
+		this.freteService.atualizarStatusPor(id, status);		
 	}
 
 	@Override
-	public Frete buscarPor(
-			@Positive(message = "O id para busca deve ser positivo")
-			@NotNull(message = "O id é obrigatório") 
-			Integer id) {
-		return service.buscarPor(id);
+	public Frete buscarPor(Integer id) {
+		return freteService.buscarPor(id);
 	}
-<<<<<<< HEAD
 	@Override
 	public List<Frete> listarPor(Integer id, Integer mes, Integer status) {
-		return service.listarPor(id, mes, status);
-=======
+		return freteService.listarPor(id, mes, status);
+	}
 
 	@Override
-	public BigDecimal calcularValorFrete(BigDecimal distancia) {
-		return service.calcularValorFrete(distancia);
->>>>>>> feature/service
+	public BigDecimal calcularValorFrete(BigDecimal distancia, FaixaFrete faixaFrete) {
+		return freteService.calcularValorFrete(distancia, faixaFrete);
 	}
 	
+	@Override
+	public ValorDoFrete calcularFretePor(String cepDeOrigem, String cepDeDestino) {
+		BigDecimal distanciaPercorrida = googleMatrixService.buscarDistancia(cepDeOrigem, cepDeDestino).get(0);
+		FaixaFrete faixaEncontrada = faixaFreteService.buscarPor(distanciaPercorrida);
+		BigDecimal custo = calcularValorFrete(distanciaPercorrida, faixaEncontrada);
+		ValorDoFrete valor = new ValorDoFrete();
+		valor.setCusto(custo);
+		return valor;
+	}
 	
 }

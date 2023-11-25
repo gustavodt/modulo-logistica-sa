@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Preconditions;
 
+import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
 import br.com.senai.modulologisticasa.service.FreteService;
 import jakarta.transaction.Transactional;
@@ -76,7 +77,7 @@ public class FreteController {
 		return ResponseEntity.ok(converter.toJsonMap(freteEncontrado));
 	}
 	
-	@GetMapping
+	@GetMapping("/id/{id}/mex/{mes}/status/{status}")
 	public ResponseEntity<?> listarPor(
 			@RequestParam("id")
 			Integer id,
@@ -86,6 +87,16 @@ public class FreteController {
 			Integer status){
 			List<Frete> fretes = service.listarPor(id, mes, status);
 		return ResponseEntity.ok(converter.toJsonList(fretes));
+	}
+	
+	@GetMapping("/cepDeOrigem/{cepDeOrigem}/cepDeDestino/{cepDeDestino}")
+	public ResponseEntity<?> calcularValorFrete(
+			@RequestParam("cepDeOrigem")
+			String cepDeOrigem, 
+			@RequestParam("cepDeDestino")
+			String cepDeDestino){
+			ValorDoFrete valorDoFrete = service.calcularFretePor(cepDeOrigem, cepDeDestino);
+		return ResponseEntity.ok(converter.toJsonMap(valorDoFrete));
 	}
 
 	

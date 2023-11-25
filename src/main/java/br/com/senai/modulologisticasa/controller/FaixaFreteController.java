@@ -1,7 +1,6 @@
 
 package br.com.senai.modulologisticasa.controller;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,14 +48,6 @@ public class FaixaFreteController {
 			@PathVariable("id") 
 			Integer id) {
 		FaixaFrete FaixaFreteEncontrada = service.buscarPor(id);
-		return ResponseEntity.ok(converter(FaixaFreteEncontrada));
-	}
-	
-	@GetMapping("/distanciaPercorrida/{distanciaPercorrida}")
-	public ResponseEntity<?> buscarPor(
-			@PathVariable("distanciaPercorrida") 
-			BigDecimal distanciaPercorrida) {
-		FaixaFrete FaixaFreteEncontrada = service.buscarPor(distanciaPercorrida);
 		return ResponseEntity.ok(converter(FaixaFreteEncontrada));
 	}
 	
