@@ -71,7 +71,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 				return faixaFrete;
 			} else {
 				if (faixasFrete.get(faixasFrete.size() - 1).getKmMin() == faixaFrete.getKmMin()) {
-					throw new RuntimeException("A distância está fora das faizas cadastradas");
+					throw new RuntimeException("A distância está fora das faixas cadastradas");
 				}
 			}
 		}

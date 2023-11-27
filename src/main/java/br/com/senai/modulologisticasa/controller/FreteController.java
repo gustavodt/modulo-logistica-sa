@@ -2,6 +2,7 @@ package br.com.senai.modulologisticasa.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -77,15 +78,13 @@ public class FreteController {
 		return ResponseEntity.ok(converter.toJsonMap(freteEncontrado));
 	}
 	
-	@GetMapping("/id/{id}/mex/{mes}/status/{status}")
+	@GetMapping("/ano/{ano}/mes/{mes}")
 	public ResponseEntity<?> listarPor(
-			@RequestParam("id")
-			Integer id,
-			@RequestParam ("mes")
-			Integer mes,
-			@RequestParam("status")
-			Integer status){
-			List<Frete> fretes = service.listarPor(id, mes, status);
+			@RequestParam("ano")
+			Integer ano,
+			@RequestParam("mes")
+			Optional<Integer> mes){
+			List<Frete> fretes = service.listarPor(ano, mes);
 		return ResponseEntity.ok(converter.toJsonList(fretes));
 	}
 	
