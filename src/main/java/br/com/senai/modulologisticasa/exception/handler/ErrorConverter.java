@@ -1,4 +1,8 @@
 package br.com.senai.modulologisticasa.exception.handler;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 949e05d5729e6511e9bc5b78aeeb50874f9a85f7
 import java.util.Map;
 
 import org.json.JSONArray;

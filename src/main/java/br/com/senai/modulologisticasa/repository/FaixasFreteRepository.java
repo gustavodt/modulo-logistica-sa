@@ -1,6 +1,6 @@
 package br.com.senai.modulologisticasa.repository;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,13 +14,19 @@ public interface FaixasFreteRepository extends JpaRepository<FaixaFrete, Integer
 	@Query(value = 
 			"SELECT ff "
 			+ "FROM FaixaFrete ff "
-			+ "WHERE ff.id = :id ")
-	public FaixaFrete buscarPorId(Integer id);
+			+ "ORDER BY ff.kmMin")
+	public List<FaixaFrete> listarTodos();
 	
 	@Query(value = 
 			"SELECT ff "
 			+ "FROM FaixaFrete ff "
-			+ "WHERE ff.valorKm = :valorKm ")
-	public FaixaFrete buscarPorValorKm(BigDecimal valorKm);
+			+ "WHERE ff.kmMax = :kmMin")
+	public FaixaFrete validarKmMin(Integer kmMin);
+	
+	@Query(value = 
+			"SELECT ff "
+			+ "FROM FaixaFrete ff "
+			+ "WHERE ff.id = :id ")
+	public FaixaFrete buscarPorId(Integer id);
 	
 }
