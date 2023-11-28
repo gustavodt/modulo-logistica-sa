@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
+import br.com.senai.modulologisticasa.exception.BusinessException;
 import br.com.senai.modulologisticasa.repository.FaixasFreteRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 
@@ -31,7 +32,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 			FaixaFrete faixaSalva = repository.save(faixaFrete);
 			return repository.buscarPorId(faixaSalva.getId());			
 		} else {
-			throw new RuntimeException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
+			throw new BusinessException("KmMin da faixa de frete precisa ser igual ao kmMax da faixa de frete anterior");
 		}
 	}
 	
@@ -45,7 +46,7 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 			|| (faixaFreteAntiga.getKmMin() < faixaFreteNova.getKmMin()
 					&& faixaFreteAntiga.getKmMax() > faixaFreteNova.getKmMax())) {
 		} else {
-			throw new RuntimeException("Faixas de frete em conflito");
+			throw new BusinessException("Faixas de frete em conflito");
 		};
 	}
 	
@@ -71,11 +72,11 @@ public class FaixaFreteServiceImpl implements FaixaFreteService {
 				return faixaFrete;
 			} else {
 				if (faixasFrete.get(faixasFrete.size() - 1).getKmMin() == faixaFrete.getKmMin()) {
-					throw new RuntimeException("A distância está fora das faixas cadastradas");
+					throw new BusinessException("A distância está fora das faixas cadastradas");
 				}
 			}
 		}
-		throw new RuntimeException("Não foi possível encontrar faixa de frete");
+		throw new BusinessException("Não foi possível encontrar faixa de frete");
 	}
 
 }

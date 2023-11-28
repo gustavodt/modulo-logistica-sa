@@ -3,7 +3,6 @@ package br.com.senai.modulologisticasa.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -43,9 +42,10 @@ public interface FreteService {
 			@Positive(message = "O ano para busca deve ser positivo")
 			@NotNull(message = "O ano é obrigatório")
 			Integer ano,
-			@Size(min= 1, max = 12, message = "O mês deve ser entre 1 e 12")
+			@Min(value = 1)
+			@Max(value = 12)
 			@NotNull(message = "O mês não pode ser nulo")
-			Optional<Integer> mes);
+			Integer mes);
 
 	public default BigDecimal calcularValorFrete(
 			@DecimalMin(value = "0.0", inclusive = false, message = "O valor da distância deve ser positivo")

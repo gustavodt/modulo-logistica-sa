@@ -2,7 +2,6 @@ package br.com.senai.modulologisticasa.service.Impl;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,7 +57,7 @@ public class FreteServiceImpl implements FreteService {
 	}
 	
 	@Override
-	public List<Frete> listarPor(Integer ano, Optional<Integer> mes) {
+	public List<Frete> listarPor(Integer ano, Integer mes) {
 		List<Frete> fretes = fretesRepository.listarPor(ano, mes);
 		Preconditions.checkNotNull(fretes, "Lista de fretes vazia");
 		return fretes;

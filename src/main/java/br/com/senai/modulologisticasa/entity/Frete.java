@@ -3,6 +3,8 @@ package br.com.senai.modulologisticasa.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -76,6 +78,7 @@ public class Frete {
 	private Integer tempoEntregaMinutos;
 	
 	@Transient
+	@JsonIgnore
 	public boolean isPersistido() {
 		return getId() != null && getId() > 0;
 	}

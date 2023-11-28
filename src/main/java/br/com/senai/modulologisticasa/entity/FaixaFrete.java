@@ -1,5 +1,7 @@
 package br.com.senai.modulologisticasa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,6 +45,7 @@ public class FaixaFrete {
 	private Integer valorKm;
 	
 	@Transient
+	@JsonIgnore
 	public boolean isPersistido() {
 		return getId() != null && getId() > 0;
 	}

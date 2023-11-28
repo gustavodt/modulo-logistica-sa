@@ -3,7 +3,6 @@ package br.com.senai.modulologisticasa.service.proxy;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,7 +46,7 @@ public class FreteServiceProxy implements FreteService{
 		return freteService.buscarPor(id);
 	}
 	@Override
-	public List<Frete> listarPor(Integer id, Optional<Integer> mes) {
+	public List<Frete> listarPor(Integer id, Integer mes) {
 		return freteService.listarPor(id, mes);
 	}
 
@@ -59,16 +58,11 @@ public class FreteServiceProxy implements FreteService{
 	@Override
 	public ValorDoFrete calcularFretePor(String cepDeOrigem, String cepDeDestino) {
 		BigDecimal distanciaPercorrida = googleMatrixService.buscarDistancia(cepDeOrigem, cepDeDestino).get(0);
-		System.out.println(distanciaPercorrida);
 		distanciaPercorrida = distanciaPercorrida.divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP);
-		System.out.println(distanciaPercorrida);
 		FaixaFrete faixaEncontrada = faixaFreteService.buscarPor(distanciaPercorrida);
-		System.out.println(faixaEncontrada);
 		BigDecimal custo = calcularValorFrete(distanciaPercorrida, faixaEncontrada);
-		System.out.println(custo);
 		ValorDoFrete valor = new ValorDoFrete();
 		valor.setCusto(custo);
-		System.out.println(valor);
 		return valor;
 	}
 	

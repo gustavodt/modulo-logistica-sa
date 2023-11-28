@@ -1,7 +1,6 @@
 package br.com.senai.modulologisticasa.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,7 +24,7 @@ public interface FretesRepository extends JpaRepository<Frete, Integer>{
 					+ "FROM Frete f "
 					+ "WHERE EXTRACT(YEAR, f.dataMovimento) = :ano "
 					+ "AND EXTRACT(MONTH, f.dataMovimento) = :mes ")
-	public List<Frete> listarPor(Integer ano, Optional<Integer> mes);
+	public List<Frete> listarPor(Integer ano, Integer mes);
 	
 	@Query(value = 
 			"SELECT f "

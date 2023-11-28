@@ -2,8 +2,6 @@
 package br.com.senai.modulologisticasa.controller;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,21 +17,15 @@ import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/faixafrete")
+@RequestMapping("/faixaFrete")
 public class FaixaFreteController {
+	
+	@Autowired
+	private MapConverter converter;
 	
 	@Autowired
 	@Qualifier("faixaFreteServiceProxy")
 	private FaixaFreteService service;
-	
-	private Map<String, Object> converter(FaixaFrete faixaFrete){		
-		Map<String, Object> faixaFreteMap = new HashMap<String, Object>();
-		faixaFreteMap.put("id", faixaFrete.getId());
-		faixaFreteMap.put("kmMin", faixaFrete.getKmMin());
-		faixaFreteMap.put("kmMax", faixaFrete.getKmMax());
-		faixaFreteMap.put("valorKm", faixaFrete.getValorKm());		
-		return faixaFreteMap;
-	}
 	
 	@PostMapping
 	@Transactional
@@ -48,7 +40,7 @@ public class FaixaFreteController {
 			@PathVariable("id") 
 			Integer id) {
 		FaixaFrete FaixaFreteEncontrada = service.buscarPor(id);
-		return ResponseEntity.ok(converter(FaixaFreteEncontrada));
+		return ResponseEntity.ok(converter.toJsonMap(FaixaFreteEncontrada));
 	}
 	
 }
