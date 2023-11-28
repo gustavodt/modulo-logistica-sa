@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -56,6 +57,6 @@ public interface FretesRepository extends JpaRepository<Frete, Integer>{
 			"UPDATE Frete f "
 			+ "SET f.status = :status "
 			+ "WHERE f.id = :id")
-	public void atualizarPor(Integer id, Integer status);
+	public void atualizarPor(Integer id, Status status);
 	
 }

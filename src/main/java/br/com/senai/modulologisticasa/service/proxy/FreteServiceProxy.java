@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
 import br.com.senai.modulologisticasa.service.GoogleMatrixService;
@@ -37,7 +38,7 @@ public class FreteServiceProxy implements FreteService{
 	}
 
 	@Override
-	public void atualizarStatusPor(Integer id, Integer status) {
+	public void atualizarStatusPor(Integer id, Status status) {
 		this.freteService.atualizarStatusPor(id, status);		
 	}
 

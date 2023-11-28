@@ -11,6 +11,7 @@ import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import br.com.senai.modulologisticasa.repository.FretesRepository;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
@@ -33,7 +34,7 @@ public class FreteServiceImpl implements FreteService {
 	}
 
 	@Override
-	public void atualizarStatusPor(Integer id, Integer status) {
+	public void atualizarStatusPor(Integer id, Status status) {
 		
 		Frete freteEncontrado = fretesRepository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não existe Frete vinculado ao ID informado");

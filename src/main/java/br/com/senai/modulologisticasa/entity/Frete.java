@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -65,7 +66,7 @@ public class Frete {
 	@Max(value = 5)
 	@NotNull(message = "O status do pedido é obrigatorio")
 	@Column(name = "status")
-	private Integer status;
+	private Status status;
 	
 	@Positive
 	@NotNull(message = "O id do entregador é orbrigatório")
@@ -81,6 +82,24 @@ public class Frete {
 	@JsonIgnore
 	public boolean isPersistido() {
 		return getId() != null && getId() > 0;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public boolean isStatusProntoParaColeta() {
+		return getStatus() == Status.PRONTO_PARA_COLETA;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public boolean isStatusAceitoParaEntrega() {
+		return getStatus() == Status.ACEITO_PARA_ENTREGA;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public boolean isStatusEntregue() {
+		return getStatus() == Status.ENTREGUE;
 	}
 	
 }

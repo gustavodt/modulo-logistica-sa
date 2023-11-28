@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
@@ -31,7 +32,7 @@ public interface FreteService {
 			@Min(value = 3)
 			@Max(value = 5)
 			@NotNull(message = "O novo status não pode ser nulo")
-			Integer status);	
+			Status status);	
 	
 	public Frete buscarPor(
 			@Positive(message = "O id para busca deve ser positivo")
