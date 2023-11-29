@@ -1,13 +1,11 @@
 package br.com.senai.modulologisticasa.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class Endereco {
+public class EnderecoCliente {
 	
 	@Size(min = 8, max = 8, message = "O cep não deve conter mais de 45 caracteres")
 	@NotBlank(message = "O cep é obrigatório")

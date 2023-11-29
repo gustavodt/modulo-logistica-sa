@@ -18,6 +18,7 @@ import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import br.com.senai.modulologisticasa.service.FreteService;
 import jakarta.transaction.Transactional;
 
@@ -51,7 +52,7 @@ public class FreteController {
 			@PathVariable("id")
 			Integer id,
 			@PathVariable("status")
-			Integer status){
+			Status status){
 		this.service.atualizarStatusPor(id, status);
 		return ResponseEntity.ok().build();
 		

@@ -13,6 +13,6 @@ public class Restaurante {
 	private String nome;
 	
 	@NotNull(message = "O endereço é obrigatório")
-	private Endereco endereco;
+	private EnderecoRestaurante endereco;
 	
 }
