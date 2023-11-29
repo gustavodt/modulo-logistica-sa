@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -65,6 +67,7 @@ public class Frete {
 	@Min(value = 3)
 	@Max(value = 5)
 	@NotNull(message = "O status do pedido é obrigatorio")
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private Status status;
 	
