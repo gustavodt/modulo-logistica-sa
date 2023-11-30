@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import org.apache.camel.ProducerTemplate;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,9 @@ public class FreteServiceProxy implements FreteService{
 	@Autowired
 	@Qualifier("googleMatrixServiceProxy")
 	private GoogleMatrixService googleMatrixService;
+	
+	@Autowired
+	private ProducerTemplate patchAtualizarStatus;
 
 	@Override
 	public Frete salvar(Frete frete) {
@@ -39,7 +44,13 @@ public class FreteServiceProxy implements FreteService{
 
 	@Override
 	public void atualizarStatusPor(Integer id, Status status) {
-		this.freteService.atualizarStatusPor(id, status);		
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("id", id);
+		requestBody.put("status", status);
+		patchAtualizarStatus.requestBody(
+				"direct:atualizarPor", requestBody, JSONObject.class);
+		
+		this.freteService.atualizarStatusPor(id, status);
 	}
 
 	@Override

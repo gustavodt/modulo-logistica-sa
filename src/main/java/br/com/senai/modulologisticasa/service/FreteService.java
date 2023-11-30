@@ -29,8 +29,6 @@ public interface FreteService {
 	public void atualizarStatusPor(
 			@NotNull(message = "O id é obrigatório")
 			Integer id,
-			@Min(value = 3)
-			@Max(value = 5)
 			@NotNull(message = "O novo status não pode ser nulo")
 			Status status);	
 	

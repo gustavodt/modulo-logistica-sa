@@ -17,8 +17,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -64,8 +62,6 @@ public class Frete {
 	@Column(name = "dataMovimento")
 	private LocalDateTime dataMovimento;
 	
-	@Min(value = 3)
-	@Max(value = 5)
 	@NotNull(message = "O status do pedido é obrigatorio")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
