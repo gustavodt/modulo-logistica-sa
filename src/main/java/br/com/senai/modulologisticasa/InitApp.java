@@ -17,7 +17,6 @@ public class InitApp {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			
 		};
 	}
 

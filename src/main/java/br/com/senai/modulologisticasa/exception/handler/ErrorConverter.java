@@ -1,5 +1,4 @@
 package br.com.senai.modulologisticasa.exception.handler;
-
 import java.util.Map;
 
 import org.json.JSONArray;

@@ -22,7 +22,7 @@ public class GetCardapioMktplaceRestaurante extends RouteBuilder implements Seri
 	private String urlBusca;
 	
 	@Value("${mktplace-key}")	
-	private String token;	
+	private String token;
 	
 	@Autowired
 	private ErrorProcessor errorProcessor;

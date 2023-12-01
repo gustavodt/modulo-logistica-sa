@@ -9,8 +9,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -43,19 +41,19 @@ public class HandlerErrorDefault {
 				"O corpo (body) da requisição possui erros ou não existe");
 	}
 	
-	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	@ExceptionHandler(BadCredentialsException.class)
-	public Map<String, Object> handle(BadCredentialsException bde){
-		return errorConverter.criarMapDeErro(ErroDaApi.CREDENCIAIS_INVALIDAS, 
-				"Login e/ou senha inválidos");
-	}	
-	
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(CredentialsExpiredException.class)
-	public Map<String, Object> handle(CredentialsExpiredException eje){
-		return errorConverter.criarMapDeErro(ErroDaApi.TOKEN_EXPIRADO, 
-				"Token fora da validade (expirado)");
-	}
+//	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+//	@ExceptionHandler(BadCredentialsException.class)
+//	public Map<String, Object> handle(BadCredentialsException bde){
+//		return errorConverter.criarMapDeErro(ErroDaApi.CREDENCIAIS_INVALIDAS, 
+//				"Login e/ou senha inválidos");
+//	}	
+//	
+//	@ResponseStatus(HttpStatus.BAD_REQUEST)
+//	@ExceptionHandler(CredentialsExpiredException.class)
+//	public Map<String, Object> handle(CredentialsExpiredException eje){
+//		return errorConverter.criarMapDeErro(ErroDaApi.TOKEN_EXPIRADO, 
+//				"Token fora da validade (expirado)");
+//	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(InvalidDefinitionException.class)

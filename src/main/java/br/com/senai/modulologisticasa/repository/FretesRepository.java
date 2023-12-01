@@ -1,27 +1,31 @@
 package br.com.senai.modulologisticasa.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.Frete;
+import ch.qos.logback.core.status.Status;
+import jakarta.transaction.Transactional;
 
-//@Repository
-//public interface FretesRepository  extends JpaRepository<Frete, Integer>{
-public interface FretesRepository {
+@Repository
+public interface FretesRepository extends JpaRepository<Frete, Integer>{
 	
-	/*@Query(value = 
+	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
 			+ "WHERE EXTRACT(YEAR FROM f.dataMovimento) = :ano "
 			+ "AND EXTRACT(MONTH FROM f.dataMovimento) = :mes "
-			+ "AND f.status = :status "
 			+ "ORDER BY f.idEntregador ",
 			countQuery = 
 					"SELECT f "
 					+ "FROM Frete f "
 					+ "WHERE EXTRACT(YEAR, f.dataMovimento) = :ano "
 					+ "AND EXTRACT(MONTH, f.dataMovimento) = :mes ")
-	public List<Frete> listarPor(Integer ano, Integer mes, Integer status);
+	public List<Frete> listarPor(Integer ano, Integer mes);
 	
 	@Query(value = 
 			"SELECT f "
@@ -32,7 +36,13 @@ public interface FretesRepository {
 					"SELECT f "
 					+ "FROM Frete f "
 					+ "WHERE f.status = :status ")
-	public List<Frete> listarPorStatus(Integer status);
+	public List<Frete> listarPorStatus(Status status);
+	
+	@Query(value = 
+			"SELECT f "
+					+ "FROM Frete f "
+					+ "WHERE f.idPedido = :idPedido ")
+	public List<Frete> listarPorIdPedido(Integer idPedido);
 	
 	@Query(value = 
 			"SELECT f "
@@ -40,17 +50,13 @@ public interface FretesRepository {
 			+ "WHERE f.id = :id ")
 	public Frete buscarPorId(Integer id);
 	
-	@Query(value = 
-			"SELECT f "
-			+ "FROM Frete f "
-			+ "WHERE f.idPedido = :id ")
-	public Frete buscarPorIdPedido(Integer idPedido);
 	
 	@Modifying
+	@Transactional
 	@Query(value = 
 			"UPDATE Frete f "
 			+ "SET f.status = :status "
 			+ "WHERE f.id = :id")
-	public void atualizarPor(Integer id, Integer status);*/
+	public void atualizarPor(Integer id, Status status);
 	
 }
