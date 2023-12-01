@@ -43,20 +43,38 @@ public class FreteServiceProxy implements FreteService{
 	}
 
 	@Override
-	public void atualizarStatusPor(Integer id, Status status) {
+	public void atualizarStatusPor(Integer id, Status status, Integer idPedido) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("id", id);
 		requestBody.put("status", status);
 		patchAtualizarStatus.requestBody(
-				"direct:atualizarPor", requestBody, JSONObject.class);
+				"direct:atualizarStatus", requestBody, JSONObject.class);
+
+		Frete freteEncontrado = buscarPorIdPedido(idPedido);
 		
-		this.freteService.atualizarStatusPor(id, status);
+		if (freteEncontrado == null) {
+			//Frete novoFrete = new Frete();
+			//fazer uma rota para buscar os ceps do cliente e restaurante
+			//usar o google matrix para descobrir a distancia e o tempo de entrega em minutos
+			//usar o service do frete para calcular o valor do frete
+			//salvar o resto das informações
+			//salvar(frete);
+		} else {		
+			this.freteService.atualizarStatusPor(freteEncontrado.getId(), status, idPedido);
+		}
+		
 	}
 
 	@Override
 	public Frete buscarPor(Integer id) {
 		return freteService.buscarPor(id);
 	}
+	
+	@Override
+	public Frete buscarPorIdPedido(Integer idPedido) {
+		return freteService.buscarPorIdPedido(idPedido);
+	}
+	
 	@Override
 	public List<Frete> listarPor(Integer id, Integer mes) {
 		return freteService.listarPor(id, mes);

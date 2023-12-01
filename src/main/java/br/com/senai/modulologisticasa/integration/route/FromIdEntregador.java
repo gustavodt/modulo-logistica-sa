@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
-public class PatchAtualizarStatus extends RouteBuilder implements Serializable {
+public class FromIdEntregador extends RouteBuilder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-
-	@Value("${url-modulo-pedidos}")
-	private String urlAtualizacao;
 	
-	@Value("${modulo-pedidos-key}")	
+	@Value("${url-modulo-rh}")
+	private String urlBusca;
+	
+	@Value("${modulo-rh-key}")	
 	private String token;
 	
 	@Autowired
@@ -27,13 +27,20 @@ public class PatchAtualizarStatus extends RouteBuilder implements Serializable {
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:atualizarStatus")
+		from("direct:buscarIdEntregador")
 			.doTry()
-				.setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PATCH))
-				.setHeader(Exchange.CONTENT_TYPE, constant("application/json;charset=UTF-8"))
+				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
+				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
 				.setHeader("Authorization", simple("Bearer " + token))
-				.toD(urlAtualizacao + "/pedidos/id/${exchangeProperty.id}/status/${exchangeProperty.status}")
-					.process(new Processor() {
+				.process(new Processor() {					
+					@Override
+					public void process(Exchange exchange) throws Exception {		
+						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
+						exchange.setProperty("email", bodyJson.getString("email"));
+					}
+				})
+				.toD(urlBusca + "/entregadores/email/${exchangeProperty.email}")
+				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
@@ -41,9 +48,9 @@ public class PatchAtualizarStatus extends RouteBuilder implements Serializable {
 					}
 				})
 			.doCatch(Exception.class)
-			.setProperty("error", simple("${exception}"))
-			.process(errorProcessor)
-		.end();
+				.setProperty("error", simple("${exception}"))
+				.process(errorProcessor)
+		.end();	
 	}
-	
 }
+

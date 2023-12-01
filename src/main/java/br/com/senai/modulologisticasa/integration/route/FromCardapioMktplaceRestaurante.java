@@ -14,35 +14,36 @@ import org.springframework.stereotype.Component;
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
 @Component
-public class GetGoogleMatrix extends RouteBuilder implements Serializable{
+public class FromCardapioMktplaceRestaurante extends RouteBuilder implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Value("${url-api-google}")
+	@Value("${url-restaurante-mktplace}")
 	private String urlBusca;
 	
-	@Value("${google-key}")	
-	private String token;	
+	@Value("${mktplace-key}")	
+	private String token;
 	
 	@Autowired
 	private ErrorProcessor errorProcessor;
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:buscarDistancia")
+		from("direct:buscarRestaurantePor")
 			.doTry()
 				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
 				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
+				.setHeader("Authorization", simple("Bearer " + token))
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {		
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("cepDeOrigem", bodyJson.getString("cepDeOrigem"));
-						exchange.setProperty("cepDeDestino", bodyJson.getString("cepDeDestino"));
+						exchange.setProperty("nomeRestaurante", bodyJson.getString("nomeRestaurante"));
+						exchange.setProperty("categoriaRestaurante", bodyJson.getString("categoriaRestaurante"));
 					}
 				})
-				.toD(urlBusca + "?destinations=${exchangeProperty.cepDeDestino}"
-						+ "&origins=${exchangeProperty.cepDeOrigem}&key=" + token)
+				.toD(urlBusca + "?nome=${exchangeProperty.nomeRestaurante}"
+						+ "&id-categoria=${exchangeProperty.categoriaRestaurante}")
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {

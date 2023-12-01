@@ -30,12 +30,19 @@ public interface FreteService {
 			@NotNull(message = "O id é obrigatório")
 			Integer id,
 			@NotNull(message = "O novo status não pode ser nulo")
-			Status status);	
+			Status status,
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idPedido);	
 	
 	public Frete buscarPor(
 			@Positive(message = "O id para busca deve ser positivo")
 			@NotNull(message = "O id é obrigatório")
 			Integer id);
+	
+	public Frete buscarPorIdPedido(
+			@Positive(message = "O id do pedido para busca deve ser positivo")
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idPedido);
 	
 	public List<Frete> listarPor(
 			@Positive(message = "O ano para busca deve ser positivo")

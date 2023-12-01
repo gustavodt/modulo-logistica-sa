@@ -9,19 +9,17 @@ import org.apache.camel.component.http.HttpMethods;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
-@Component
-public class GetCardapioMktplaceRestaurante extends RouteBuilder implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class FromPedidosAceitos extends RouteBuilder implements Serializable{
 	
-	@Value("${url-restaurante-mktplace}")
+	private static final long serialVersionUID = 1L;
+
+	@Value("${url-modulo-pedidos}")
 	private String urlBusca;
 	
-	@Value("${mktplace-key}")	
+	@Value("${modulo-pedidos-key}")	
 	private String token;
 	
 	@Autowired
@@ -29,7 +27,7 @@ public class GetCardapioMktplaceRestaurante extends RouteBuilder implements Seri
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:buscarRestaurantePor")
+		from("direct:listarPor")
 			.doTry()
 				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
 				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
@@ -38,12 +36,14 @@ public class GetCardapioMktplaceRestaurante extends RouteBuilder implements Seri
 					@Override
 					public void process(Exchange exchange) throws Exception {		
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("nomeRestaurante", bodyJson.getString("nomeRestaurante"));
-						exchange.setProperty("categoriaRestaurante", bodyJson.getString("categoriaRestaurante"));
+						exchange.setProperty("status", bodyJson.getString("status"));
+						exchange.setProperty("retirada", bodyJson.getString("tipo_entrega"));
+						exchange.setProperty("pagina", bodyJson.getString("paginacaoAtual"));
 					}
 				})
-				.toD(urlBusca + "?nome=${exchangeProperty.nomeRestaurante}"
-						+ "&id-categoria=${exchangeProperty.categoriaRestaurante}")
+				.toD(urlBusca + "/pedidos?status=${exchangeProperty.status}"
+						+ "&retirada=${exchangeProperty.retirada}"
+						+ "&pagina=${exchangeProperty.pagina}")
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {
@@ -56,5 +56,5 @@ public class GetCardapioMktplaceRestaurante extends RouteBuilder implements Seri
 				.process(errorProcessor)
 		.end();	
 	}
-	
+
 }

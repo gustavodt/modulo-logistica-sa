@@ -26,7 +26,7 @@ public class InitApp {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			System.out.println("Raul subiu");
-			service.atualizarStatusPor(106, Status.PRONTO_PARA_COLETA);
+			service.atualizarStatusPor(2, Status.PRONTO_PARA_COLETA, 106);
 		};
 	}
 

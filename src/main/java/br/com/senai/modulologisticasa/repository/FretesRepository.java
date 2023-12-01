@@ -40,23 +40,24 @@ public interface FretesRepository extends JpaRepository<Frete, Integer>{
 	
 	@Query(value = 
 			"SELECT f "
-					+ "FROM Frete f "
-					+ "WHERE f.idPedido = :idPedido ")
-	public List<Frete> listarPorIdPedido(Integer idPedido);
+			+ "FROM Frete f "
+			+ "WHERE f.id = :id ")
+	public Frete buscarPorId(Integer id);
 	
 	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
-			+ "WHERE f.id = :id ")
-	public Frete buscarPorId(Integer id);
+			+ "WHERE f.idEntregador = :idEntregador ")
+	public Frete buscarPorIdPedido(Integer id);
 	
 	
 	@Modifying
 	@Transactional
 	@Query(value = 
 			"UPDATE Frete f "
-			+ "SET f.status = :status "
+			+ "SET f.status = :status, "
+			+ "f.idPedido = :idPedido "
 			+ "WHERE f.id = :id")
-	public void atualizarPor(Integer id, Status status);
+	public void atualizarPor(Integer id, Status status, Integer idPedido);
 	
 }

@@ -34,13 +34,13 @@ public class FreteServiceImpl implements FreteService {
 	}
 
 	@Override
-	public void atualizarStatusPor(Integer id, Status status) {
+	public void atualizarStatusPor(Integer id, Status status, Integer idPedido) {
 		
 		Frete freteEncontrado = fretesRepository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não existe Frete vinculado ao ID informado");
 		Preconditions.checkArgument(freteEncontrado.getStatus() != status,
 				"O status já esta salvo para o Frete");
-		this.fretesRepository.atualizarPor(id, status);
+		this.fretesRepository.atualizarPor(id, status, idPedido);
 		
 	}
 
@@ -48,6 +48,13 @@ public class FreteServiceImpl implements FreteService {
 	public Frete buscarPor(Integer id) {
 		Frete freteEncontrado = fretesRepository.buscarPorId(id);
 		Preconditions.checkNotNull(freteEncontrado, "Não foi encontrado frete para o id informado");
+		return freteEncontrado;
+	}
+	
+	@Override
+	public Frete buscarPorIdPedido(Integer idPedido) {
+		Frete freteEncontrado = fretesRepository.buscarPorIdPedido(idPedido);
+		Preconditions.checkNotNull(freteEncontrado, "Não foi encontrado frete para o id de pedido informado");
 		return freteEncontrado;
 	}
 
