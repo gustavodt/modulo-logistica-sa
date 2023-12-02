@@ -19,6 +19,7 @@ import com.google.common.base.Preconditions;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
 import br.com.senai.modulologisticasa.entity.enuns.Status;
+import br.com.senai.modulologisticasa.service.EntregadorService;
 import br.com.senai.modulologisticasa.service.FreteService;
 import jakarta.transaction.Transactional;
 
@@ -32,6 +33,10 @@ public class FreteController {
 	@Autowired
 	@Qualifier("freteServiceProxy")
 	private FreteService service;
+	
+	@Autowired
+	@Qualifier("entregadorServiceProxy")
+	EntregadorService entregaService;
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(
@@ -47,25 +52,31 @@ public class FreteController {
 	}
 	
 	@Transactional
-	@PatchMapping("/id/{id}/idPedido/{idPedido}/aceitoParaEntrega")
+	@PatchMapping("/id/{id}/idPedido/{idPedido}/emailEntregador/{emailEntregador}/aceitoParaEntrega")
 	public ResponseEntity<?> atualizarStatusParaAceitoParaEntrega(
 			@PathVariable("id")
 			Integer id,
 			@PathVariable("idPedido")
-			Integer idPedido){
-		this.service.atualizarStatusPor(id, Status.ACEITO_PARA_ENTREGA, idPedido);
+			Integer idPedido,
+			@PathVariable("emailEntregador")
+			String emailEntregador){
+		Integer idEntregador = this.entregaService.buscarIdEntregadorPor(emailEntregador);
+		this.service.atualizarStatusPor(id, Status.ACEITO_PARA_ENTREGA, idPedido, idEntregador);
 		return ResponseEntity.ok().build();
 		
 	}
 	
 	@Transactional
-	@PatchMapping("/id/{id}/idPedido/{idPedido}/entregue")
+	@PatchMapping("/id/{id}/idPedido/{idPedido}/emailEntregador/{emailEntregador}/entregue")
 	public ResponseEntity<?> atualizarStatusParaEntregue(
 			@PathVariable("id")
 			Integer id,
 			@PathVariable("idPedido")
-			Integer idPedido){
-		this.service.atualizarStatusPor(id, Status.ENTREGUE, idPedido);
+			Integer idPedido,
+			@PathVariable("emailEntregador")
+			String emailEntregador){
+		Integer idEntregador = this.entregaService.buscarIdEntregadorPor(emailEntregador);
+		this.service.atualizarStatusPor(id, Status.ENTREGUE, idPedido, idEntregador);
 		return ResponseEntity.ok().build();
 		
 	}

@@ -32,7 +32,9 @@ public interface FreteService {
 			@NotNull(message = "O novo status não pode ser nulo")
 			Status status,
 			@NotNull(message = "O id do pedido é obrigatório")
-			Integer idPedido);	
+			Integer idPedido,
+			@NotNull(message = "O id do entregador é obrigatório")
+			Integer idEntregador);	
 	
 	public Frete buscarPor(
 			@Positive(message = "O id para busca deve ser positivo")

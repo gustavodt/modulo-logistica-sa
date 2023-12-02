@@ -39,9 +39,10 @@ public class FromIdEntregador extends RouteBuilder implements Serializable{
 					public void process(Exchange exchange) throws Exception {		
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
 						exchange.setProperty("email", bodyJson.getString("email"));
+						exchange.getMessage().setBody(null);
 					}
 				})
-				.toD(urlBusca + "/entregadores/email/${exchangeProperty.email}")
+				.toD(urlBusca + "entregador/email/${exchangeProperty.email}")
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {
@@ -55,4 +56,3 @@ public class FromIdEntregador extends RouteBuilder implements Serializable{
 		.end();	
 	}
 }
-
