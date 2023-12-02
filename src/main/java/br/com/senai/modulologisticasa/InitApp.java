@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.modulologisticasa.entity.enuns.Status;
+import br.com.senai.modulologisticasa.service.EntregadorService;
 import br.com.senai.modulologisticasa.service.FreteService;
 
 @SpringBootApplication
@@ -19,14 +19,18 @@ public class InitApp {
 	}
 	
 	@Autowired
+	@Qualifier("entregadorServiceProxy")
+	EntregadorService serviceE;
+	
+	@Autowired
 	@Qualifier("freteServiceProxy")
-	FreteService service;
+	FreteService serviceF;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			System.out.println("Raul subiu");
-			service.atualizarStatusPor(2, Status.PRONTO_PARA_COLETA, 106);
+			//System.out.println(service.buscarIdEntregadorPor("teste@gmail.com"));
 		};
 	}
 

@@ -6,6 +6,6 @@ public interface EntregadorService {
 	
 	public Integer buscarIdEntregadorPor(
 			@NotBlank(message = "O email é obrigatório")
-			Integer emailEntregador);
+			String emailEntregador);
 	
 }

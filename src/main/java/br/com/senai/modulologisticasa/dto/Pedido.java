@@ -1,20 +1,15 @@
 package br.com.senai.modulologisticasa.dto;
 
-import java.util.List;
-
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class Pedido {
 	
-	@NotNull(message = "O cliente é obrigatório")
-	private Cliente cliente;
+	@NotBlank(message = "O cep do cliente é obrigatório")
+	private String cepCliente;
 	
-	@NotNull(message = "Os itens são obrigatórios")
-	private List<QtdItem> itens;
-	
-	@NotNull(message = "O restaurante é obrigatório")
-	private Restaurante restaurante;
+	@NotBlank(message = "O cep do restaurante é obrigatório")
+	private String cepRestaurante;
 	
 }

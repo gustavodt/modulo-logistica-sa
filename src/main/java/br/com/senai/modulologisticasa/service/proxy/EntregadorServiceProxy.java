@@ -14,7 +14,7 @@ public class EntregadorServiceProxy implements EntregadorService {
 	private ProducerTemplate getIdEntregador;
 	
 	@Override
-	public Integer buscarIdEntregadorPor(Integer emailEntregador) {
+	public Integer buscarIdEntregadorPor(String emailEntregador) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("email", emailEntregador);
 		JSONObject pedidoJson = getIdEntregador.requestBody(

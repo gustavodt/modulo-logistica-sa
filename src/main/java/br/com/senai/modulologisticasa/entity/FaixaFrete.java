@@ -9,8 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -38,9 +36,8 @@ public class FaixaFrete {
 	@Column(name = "kmMax")
 	private Integer kmMax;
 	
-	@NotNull(message = "O valor de cada km é obrigtório")
-	@DecimalMin(value = "0.0", inclusive = false, message = "O valor do km deve ser positivo")
-    @Digits(message = "O valor do km deve possuir o formato 'NN.NN'", integer = 2, fraction = 2)
+	@Positive
+	@NotNull(message = "O valor do km é obrigtório")
 	@Column(name = "valorKm")
 	private Integer valorKm;
 	

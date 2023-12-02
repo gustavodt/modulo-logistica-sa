@@ -9,9 +9,11 @@ import org.apache.camel.component.http.HttpMethods;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
+@Component
 public class ToAtualizarStatus extends RouteBuilder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,15 +37,19 @@ public class ToAtualizarStatus extends RouteBuilder implements Serializable {
 				.process(new Processor() {
 					@Override
 					public void process(Exchange exchange) throws Exception {
-						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("id", bodyJson.getString("id"));
-						exchange.setProperty("status", bodyJson.getString("status"));
+						String bodyJson = exchange.getMessage().getBody(String.class);
+						JSONObject jsonObject = new JSONObject(bodyJson);
+						Integer id = jsonObject.getInt("id");
+						String status = jsonObject.getString("status");
+						exchange.setProperty("id", id);
+						exchange.setProperty("status", status);
+						exchange.getMessage().setBody(null);
 					}
 				})
-				.toD(urlAtualizacao + "/pedidos/id/${exchangeProperty.id}/status/${exchangeProperty.status}")
+				.toD(urlAtualizacao + "pedidos/id/${exchangeProperty.id}/status/${exchangeProperty.status}")				
 			.doCatch(Exception.class)
-			.setProperty("error", simple("${exception}"))
-			.process(errorProcessor)
+				.setProperty("error", simple("${exception}"))
+				.process(errorProcessor)
 		.end();
 	}
 	

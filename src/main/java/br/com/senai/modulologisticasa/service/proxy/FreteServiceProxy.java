@@ -2,6 +2,7 @@ package br.com.senai.modulologisticasa.service.proxy;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.camel.ProducerTemplate;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.com.senai.modulologisticasa.dto.Pedido;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
@@ -17,6 +19,7 @@ import br.com.senai.modulologisticasa.entity.enuns.Status;
 import br.com.senai.modulologisticasa.service.FaixaFreteService;
 import br.com.senai.modulologisticasa.service.FreteService;
 import br.com.senai.modulologisticasa.service.GoogleMatrixService;
+import br.com.senai.modulologisticasa.service.PedidoService;
 
 @Service
 public class FreteServiceProxy implements FreteService{
@@ -26,7 +29,7 @@ public class FreteServiceProxy implements FreteService{
 	private FreteService freteService;
 	
 	@Autowired
-	@Qualifier("faixaFreteServiceImpl")
+	@Qualifier("faixaFreteServiceProxy")
 	private FaixaFreteService faixaFreteService;
 	
 	@Autowired
@@ -34,8 +37,11 @@ public class FreteServiceProxy implements FreteService{
 	private GoogleMatrixService googleMatrixService;
 	
 	@Autowired
-	private ProducerTemplate patchAtualizarStatus;
-
+	@Qualifier("pedidoServiceProxy")
+	private PedidoService pedidoService;
+	
+	@Autowired
+	private ProducerTemplate toAtualizarStatus;
 	@Override
 	public Frete salvar(Frete frete) {
 		
@@ -45,20 +51,39 @@ public class FreteServiceProxy implements FreteService{
 	@Override
 	public void atualizarStatusPor(Integer id, Status status, Integer idPedido) {
 		JSONObject requestBody = new JSONObject();
-		requestBody.put("id", id);
+		requestBody.put("id", idPedido);
 		requestBody.put("status", status);
-		patchAtualizarStatus.requestBody(
+		toAtualizarStatus.requestBody(
 				"direct:atualizarStatus", requestBody, JSONObject.class);
 
 		Frete freteEncontrado = buscarPorIdPedido(idPedido);
 		
 		if (freteEncontrado == null) {
-			//Frete novoFrete = new Frete();
-			//fazer uma rota para buscar os ceps do cliente e restaurante
-			//usar o google matrix para descobrir a distancia e o tempo de entrega em minutos
-			//usar o service do frete para calcular o valor do frete
-			//salvar o resto das informações
-			//salvar(frete);
+			Frete novoFrete = new Frete();
+			
+			Pedido novoPedido = pedidoService.buscarPorId(idPedido);
+			
+			novoFrete.setDataMovimento(LocalDateTime.now());
+			novoFrete.setStatus(status);
+			
+			String cepRestaurante = novoPedido.getCepRestaurante();
+			String cepCliente = novoPedido.getCepCliente();
+			
+			List<BigDecimal> distanciaTempo = 
+					googleMatrixService.buscarDistancia(cepRestaurante, cepCliente);
+			BigDecimal distancia = distanciaTempo.get(0).divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP);
+			BigDecimal tempo = distanciaTempo.get(1).divide(BigDecimal.valueOf(60), 0, RoundingMode.HALF_UP);
+			
+			novoFrete.setDistancia(distancia);
+			novoFrete.setTempoEntregaMinutos(Integer.valueOf(tempo.toString()));
+			
+			FaixaFrete faixaFreteEncontrada = faixaFreteService.buscarPor(distancia);
+			novoFrete.setValorKm(faixaFreteEncontrada.getValorKm());
+			
+			ValorDoFrete valorDoFrete = calcularFretePor(cepRestaurante, cepCliente);
+			novoFrete.setValorTotal(valorDoFrete.getCusto());
+			
+			salvar(novoFrete);
 		} else {		
 			this.freteService.atualizarStatusPor(freteEncontrado.getId(), status, idPedido);
 		}

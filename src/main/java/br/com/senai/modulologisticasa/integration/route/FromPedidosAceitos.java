@@ -9,9 +9,11 @@ import org.apache.camel.component.http.HttpMethods;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
+@Component
 public class FromPedidosAceitos extends RouteBuilder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,7 @@ public class FromPedidosAceitos extends RouteBuilder implements Serializable{
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:listarPor")
+		from("direct:buscarPedido")
 			.doTry()
 				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
 				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
@@ -36,14 +38,10 @@ public class FromPedidosAceitos extends RouteBuilder implements Serializable{
 					@Override
 					public void process(Exchange exchange) throws Exception {		
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("status", bodyJson.getString("status"));
-						exchange.setProperty("retirada", bodyJson.getString("tipo_entrega"));
-						exchange.setProperty("pagina", bodyJson.getString("paginacaoAtual"));
+						exchange.setProperty("idPedido", bodyJson.getString("id_pedido"));
 					}
 				})
-				.toD(urlBusca + "/pedidos?status=${exchangeProperty.status}"
-						+ "&retirada=${exchangeProperty.retirada}"
-						+ "&pagina=${exchangeProperty.pagina}")
+				.toD(urlBusca + "/pedidos/id/${exchangeProperty.idPedido}")
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {

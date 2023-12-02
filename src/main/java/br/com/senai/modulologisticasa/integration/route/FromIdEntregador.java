@@ -9,9 +9,11 @@ import org.apache.camel.component.http.HttpMethods;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
+@Component
 public class FromIdEntregador extends RouteBuilder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
