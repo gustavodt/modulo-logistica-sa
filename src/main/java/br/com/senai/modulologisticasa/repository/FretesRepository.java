@@ -47,8 +47,8 @@ public interface FretesRepository extends JpaRepository<Frete, Integer>{
 	@Query(value = 
 			"SELECT f "
 			+ "FROM Frete f "
-			+ "WHERE f.idEntregador = :idEntregador ")
-	public Frete buscarPorIdPedido(Integer id);
+			+ "WHERE f.idPedido = :idPedido ")
+	public Frete buscarPorIdPedido(Integer idPedido);
 	
 	
 	@Modifying

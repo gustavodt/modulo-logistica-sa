@@ -36,7 +36,7 @@ public class FreteController {
 	
 	@Autowired
 	@Qualifier("entregadorServiceProxy")
-	EntregadorService entregaService;
+	EntregadorService entregadorService;
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(
@@ -60,7 +60,7 @@ public class FreteController {
 			Integer idPedido,
 			@PathVariable("emailEntregador")
 			String emailEntregador){
-		Integer idEntregador = this.entregaService.buscarIdEntregadorPor(emailEntregador);
+		Integer idEntregador = this.entregadorService.buscarIdEntregadorPor(emailEntregador);
 		this.service.atualizarStatusPor(id, Status.ACEITO_PARA_ENTREGA, idPedido, idEntregador);
 		return ResponseEntity.ok().build();
 		
@@ -75,7 +75,7 @@ public class FreteController {
 			Integer idPedido,
 			@PathVariable("emailEntregador")
 			String emailEntregador){
-		Integer idEntregador = this.entregaService.buscarIdEntregadorPor(emailEntregador);
+		Integer idEntregador = this.entregadorService.buscarIdEntregadorPor(emailEntregador);
 		this.service.atualizarStatusPor(id, Status.ENTREGUE, idPedido, idEntregador);
 		return ResponseEntity.ok().build();
 		

@@ -50,11 +50,6 @@ public class FreteServiceProxy implements FreteService{
 
 	@Override
 	public void atualizarStatusPor(Integer id, Status status, Integer idPedido, Integer idEntregador) {
-		JSONObject requestBody = new JSONObject();
-		requestBody.put("id", idPedido);
-		requestBody.put("status", status);
-		toAtualizarStatus.requestBody(
-				"direct:atualizarStatus", requestBody, JSONObject.class);
 
 		Frete freteEncontrado = buscarPorIdPedido(idPedido);
 		
@@ -85,6 +80,12 @@ public class FreteServiceProxy implements FreteService{
 			
 			salvar(novoFrete);
 		} else {
+			JSONObject requestBody = new JSONObject();
+			requestBody.put("id", idPedido);
+			requestBody.put("status", status);
+			toAtualizarStatus.requestBody(
+					"direct:atualizarStatus", requestBody, JSONObject.class);
+			
 			this.freteService.atualizarStatusPor(freteEncontrado.getId(), status, idPedido, idEntregador);
 		}
 		

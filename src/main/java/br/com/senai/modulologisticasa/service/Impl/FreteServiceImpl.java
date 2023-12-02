@@ -65,7 +65,7 @@ public class FreteServiceImpl implements FreteService {
 	@Override
 	public List<Frete> listarPor(Integer ano, Integer mes) {
 		List<Frete> fretes = fretesRepository.listarPor(ano, mes);
-		Preconditions.checkArgument(fretes.equals(null), "Lista de fretes vazia");
+		Preconditions.checkNotNull(fretes, "Lista de fretes vazia");
 		return fretes;
 	}
 	

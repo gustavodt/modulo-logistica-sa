@@ -32,7 +32,7 @@ public class FaixaFreteController {
 	public ResponseEntity<?> inserir(FaixaFrete faixaFrete) {
 		FaixaFrete FaixaFreteSalva = service.inserir(faixaFrete);		
 		return ResponseEntity.created(URI.create(
-				"/cardapios/id/" + FaixaFreteSalva.getId())).build();
+				"/faixaFrete/id/" + FaixaFreteSalva.getId())).build();
 	}
 	
 	@GetMapping("/id/{id}")
