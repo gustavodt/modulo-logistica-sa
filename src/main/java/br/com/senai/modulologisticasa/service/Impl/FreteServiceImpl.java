@@ -40,7 +40,7 @@ public class FreteServiceImpl implements FreteService {
 		Preconditions.checkNotNull(freteEncontrado, "Não existe Frete vinculado ao ID informado");
 		Preconditions.checkArgument(freteEncontrado.getStatus() != status,
 				"O status já esta salvo para o Frete");
-		this.fretesRepository.atualizarPor(id, null);
+		this.fretesRepository.atualizarPor(id, status);
 		
 	}
 
@@ -60,7 +60,7 @@ public class FreteServiceImpl implements FreteService {
 	@Override
 	public List<Frete> listarPor(Integer ano, Integer mes) {
 		List<Frete> fretes = fretesRepository.listarPor(ano, mes);
-		Preconditions.checkNotNull(fretes, "Lista de fretes vazia");
+		Preconditions.checkArgument(fretes.equals(null), "Lista de fretes vazia");
 		return fretes;
 	}
 	

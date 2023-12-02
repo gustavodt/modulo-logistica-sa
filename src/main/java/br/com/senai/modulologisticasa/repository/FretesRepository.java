@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.senai.modulologisticasa.entity.Frete;
-import ch.qos.logback.core.status.Status;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.transaction.Transactional;
 
 @Repository

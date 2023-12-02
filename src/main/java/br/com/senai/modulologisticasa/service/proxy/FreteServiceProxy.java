@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Preconditions;
+
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
@@ -47,7 +49,7 @@ public class FreteServiceProxy implements FreteService{
 		return freteService.buscarPor(id);
 	}
 	@Override
-	public List<Frete> listarPor(Integer id, Integer mes) {
+	public List<Frete> listarPor(Integer id, Integer mes) {		
 		return freteService.listarPor(id, mes);
 	}
 
