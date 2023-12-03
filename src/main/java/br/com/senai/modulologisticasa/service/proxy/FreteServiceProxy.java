@@ -38,9 +38,6 @@ public class FreteServiceProxy implements FreteService{
 	@Qualifier("pedidoServiceProxy")
 	private PedidoService pedidoService;
 	
-	/*@Autowired
-	private ProducerTemplate toAtualizarStatus;*/
-	
 	@Autowired
 	private ProducerTemplate toPedidoApi;
 	
@@ -48,49 +45,6 @@ public class FreteServiceProxy implements FreteService{
 	public Frete salvar(Frete frete) {
 		
 		return freteService.salvar(frete);
-	}
-
-	@Override
-	public void atualizarStatusPor(Integer id, Status status, Integer idPedido, Integer idEntregador) {
-
-		/*Frete freteEncontrado = buscarPorIdPedido(idPedido);
-		
-		if (freteEncontrado == null) {
-			Frete novoFrete = new Frete();
-			
-			Pedido novoPedido = pedidoService.buscarPorId(idPedido);
-			
-			novoFrete.setDataMovimento(LocalDateTime.now());
-			novoFrete.setStatus(status);
-			
-			String cepRestaurante = novoPedido.getCepRestaurante();
-			String cepCliente = novoPedido.getCepCliente();
-			
-			List<BigDecimal> distanciaTempo = 
-					googleMatrixService.buscarDistancia(cepRestaurante, cepCliente);
-			BigDecimal distancia = distanciaTempo.get(0).divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP);
-			BigDecimal tempo = distanciaTempo.get(1).divide(BigDecimal.valueOf(60), 0, RoundingMode.HALF_UP);
-			
-			novoFrete.setDistancia(distancia);
-			novoFrete.setTempoEntregaMinutos(Integer.valueOf(tempo.toString()));
-			
-			FaixaFrete faixaFreteEncontrada = faixaFreteService.buscarPor(distancia);
-			novoFrete.setValorKm(faixaFreteEncontrada.getValorKm());
-			
-			ValorDoFrete valorDoFrete = calcularFretePor(cepRestaurante, cepCliente);
-			novoFrete.setValorTotal(valorDoFrete.getCusto());
-			
-			salvar(novoFrete);
-		} else {
-			JSONObject requestBody = new JSONObject();
-			requestBody.put("id", idPedido);
-			requestBody.put("status", status);
-			toAtualizarStatus.requestBody(
-					"direct:atualizarStatus", requestBody, JSONObject.class);
-			
-			this.freteService.atualizarStatusPor(freteEncontrado.getId(), status, idPedido, idEntregador);
-		}*/
-		
 	}
 
 	@Override
@@ -126,14 +80,24 @@ public class FreteServiceProxy implements FreteService{
 	
 	@Override
 	public void aceitarParaEntregaPor(Integer idDoEntregador, Integer idDoPedido) {
-		
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("idDoPedido", idDoPedido);
 		requestBody.put("status", Status.ACEITO_PARA_ENTREGA);		
 		
-		this.toPedidoApi.requestBody("direct:atualizarStatus", requestBody);		
-
 		this.freteService.aceitarParaEntregaPor(idDoEntregador, idDoPedido);
+		
+		this.toPedidoApi.requestBody("direct:atualizarStatus", requestBody);		
+	}
+
+	@Override
+	public void confirmarEntregaPor(Integer idDoEntregador, Integer idDoPedido) {
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("idDoPedido", idDoPedido);
+		requestBody.put("status", Status.ENTREGUE);		
+		
+		this.freteService.confirmarEntregaPor(idDoEntregador, idDoPedido);
+
+		this.toPedidoApi.requestBody("direct:atualizarStatus", requestBody);		
 	}
 	
 }

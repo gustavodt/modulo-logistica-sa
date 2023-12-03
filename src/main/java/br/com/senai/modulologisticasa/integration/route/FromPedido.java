@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import br.com.senai.modulologisticasa.integration.processor.ErrorProcessor;
 
 @Component
-public class FromPedidosAceitos extends RouteBuilder implements Serializable{
+public class FromPedido extends RouteBuilder implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class FromPedidosAceitos extends RouteBuilder implements Serializable{
 					@Override
 					public void process(Exchange exchange) throws Exception {		
 						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("idPedido", bodyJson.getString("id_pedido"));
+						exchange.setProperty("idPedido", bodyJson.getInt("idPedido"));
 					}
 				})
 				.toD(urlBusca + "/pedidos/id/${exchangeProperty.idPedido}")

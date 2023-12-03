@@ -9,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
-import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
@@ -25,16 +24,6 @@ public interface FreteService {
 	public Frete salvar(
 			@NotNull(message = "O Frete não pode ser nulo")
 			Frete frete);
-	
-	public void atualizarStatusPor(
-			@NotNull(message = "O id é obrigatório")
-			Integer id,
-			@NotNull(message = "O novo status não pode ser nulo")
-			Status status,
-			@NotNull(message = "O id do pedido é obrigatório")
-			Integer idPedido,
-			@NotNull(message = "O id do entregador é obrigatório")
-			Integer idEntregador);	
 	
 	public Frete buscarPor(
 			@Positive(message = "O id para busca deve ser positivo")
@@ -75,7 +64,20 @@ public interface FreteService {
 		throw new RuntimeException("Esse método não foi implementado");
 	}
 	
-	//Aplique as validações depois que eu terminar
-	public void aceitarParaEntregaPor(Integer idDoEntregador, Integer idDoPedido);
+	public void aceitarParaEntregaPor(
+			@Positive(message = "O id do entregador para busca deve ser positivo")
+			@NotNull(message = "O id do entregador é obrigatório")
+			Integer idDoEntregador, 
+			@Positive(message = "O id do pedido para busca deve ser positivo")
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idDoPedido);
+
+	public void confirmarEntregaPor(
+			@Positive(message = "O id do entregador para busca deve ser positivo")
+			@NotNull(message = "O id do entregador é obrigatório")
+			Integer idDoEntregador, 
+			@Positive(message = "O id do pedido para busca deve ser positivo")
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idDoPedido);
 	
 }

@@ -18,7 +18,6 @@ import com.google.common.base.Preconditions;
 
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
-import br.com.senai.modulologisticasa.entity.enuns.Status;
 import br.com.senai.modulologisticasa.service.EntregadorService;
 import br.com.senai.modulologisticasa.service.FreteService;
 import jakarta.transaction.Transactional;
@@ -52,44 +51,27 @@ public class FreteController {
 	}
 	
 	@Transactional
-	@PatchMapping("/id-entregador/{id-entregador}/id-pedido/{id-pedido}/aceito")
+	@PatchMapping("/email-entregador/{email-entregador}/id-pedido/{id-pedido}/aceito")
 	public ResponseEntity<?> atualizarParaAceitoPor(
-			@PathVariable("id-entregador")
-			Integer idDoEntregador,
+			@PathVariable("email-entregador")
+			String emailDoEntregador,
 			@PathVariable("id-pedido")
 			Integer idDoPedido){
+		Integer idDoEntregador = entregadorService.buscarIdEntregadorPor(emailDoEntregador);
 		this.service.aceitarParaEntregaPor(idDoEntregador, idDoPedido);
 		return ResponseEntity.ok().build();
 	}
 	
 	@Transactional
-	@PatchMapping("/id/{id}/idPedido/{idPedido}/emailEntregador/{emailEntregador}/aceitoParaEntrega")
-	public ResponseEntity<?> atualizarStatusParaAceitoParaEntrega(
-			@PathVariable("id")
-			Integer id,
-			@PathVariable("idPedido")
-			Integer idPedido,
-			@PathVariable("emailEntregador")
-			String emailEntregador){
-		Integer idEntregador = this.entregadorService.buscarIdEntregadorPor(emailEntregador);
-		this.service.atualizarStatusPor(id, Status.ACEITO_PARA_ENTREGA, idPedido, idEntregador);
+	@PatchMapping("/email-entregador/{email-entregador}/id-pedido/{id-pedido}/entregue")
+	public ResponseEntity<?> atualizarParaEntreguePor(
+			@PathVariable("email-entregador")
+			String emailDoEntregador,
+			@PathVariable("id-pedido")
+			Integer idDoPedido){
+		Integer idDoEntregador = entregadorService.buscarIdEntregadorPor(emailDoEntregador);
+		this.service.confirmarEntregaPor(idDoEntregador, idDoPedido);
 		return ResponseEntity.ok().build();
-		
-	}
-	
-	@Transactional
-	@PatchMapping("/id/{id}/idPedido/{idPedido}/emailEntregador/{emailEntregador}/entregue")
-	public ResponseEntity<?> atualizarStatusParaEntregue(
-			@PathVariable("id")
-			Integer id,
-			@PathVariable("idPedido")
-			Integer idPedido,
-			@PathVariable("emailEntregador")
-			String emailEntregador){
-		Integer idEntregador = this.entregadorService.buscarIdEntregadorPor(emailEntregador);
-		this.service.atualizarStatusPor(id, Status.ENTREGUE, idPedido, idEntregador);
-		return ResponseEntity.ok().build();
-		
 	}
 	
 	@GetMapping("/id/{id}")
