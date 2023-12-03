@@ -29,7 +29,7 @@ public class ToAtualizarStatus extends RouteBuilder implements Serializable {
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:atualizarStatus")
+		/*from("direct:atualizarStatus")
 			.doTry()
 				.setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PATCH))
 				.setHeader(Exchange.CONTENT_TYPE, constant("application/json;charset=UTF-8"))
@@ -50,7 +50,7 @@ public class ToAtualizarStatus extends RouteBuilder implements Serializable {
 			.doCatch(Exception.class)
 				.setProperty("error", simple("${exception}"))
 				.process(errorProcessor)
-		.end();
+		.end();*/
 	}
 	
 }

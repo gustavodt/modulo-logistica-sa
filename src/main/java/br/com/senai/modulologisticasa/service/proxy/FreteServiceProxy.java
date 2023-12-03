@@ -2,7 +2,6 @@ package br.com.senai.modulologisticasa.service.proxy;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.camel.ProducerTemplate;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import br.com.senai.modulologisticasa.dto.Pedido;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
@@ -40,8 +38,12 @@ public class FreteServiceProxy implements FreteService{
 	@Qualifier("pedidoServiceProxy")
 	private PedidoService pedidoService;
 	
+	/*@Autowired
+	private ProducerTemplate toAtualizarStatus;*/
+	
 	@Autowired
-	private ProducerTemplate toAtualizarStatus;
+	private ProducerTemplate toPedidoApi;
+	
 	@Override
 	public Frete salvar(Frete frete) {
 		
@@ -51,7 +53,7 @@ public class FreteServiceProxy implements FreteService{
 	@Override
 	public void atualizarStatusPor(Integer id, Status status, Integer idPedido, Integer idEntregador) {
 
-		Frete freteEncontrado = buscarPorIdPedido(idPedido);
+		/*Frete freteEncontrado = buscarPorIdPedido(idPedido);
 		
 		if (freteEncontrado == null) {
 			Frete novoFrete = new Frete();
@@ -87,7 +89,7 @@ public class FreteServiceProxy implements FreteService{
 					"direct:atualizarStatus", requestBody, JSONObject.class);
 			
 			this.freteService.atualizarStatusPor(freteEncontrado.getId(), status, idPedido, idEntregador);
-		}
+		}*/
 		
 	}
 
@@ -120,6 +122,18 @@ public class FreteServiceProxy implements FreteService{
 		ValorDoFrete valor = new ValorDoFrete();
 		valor.setCusto(custo);
 		return valor;
+	}
+	
+	@Override
+	public void aceitarParaEntregaPor(Integer idDoEntregador, Integer idDoPedido) {
+		
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("idDoPedido", idDoPedido);
+		requestBody.put("status", Status.ACEITO_PARA_ENTREGA);		
+		
+		this.toPedidoApi.requestBody("direct:atualizarStatus", requestBody);		
+
+		this.freteService.aceitarParaEntregaPor(idDoEntregador, idDoPedido);
 	}
 	
 }

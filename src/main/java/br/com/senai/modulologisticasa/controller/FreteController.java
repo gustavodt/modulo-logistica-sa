@@ -52,6 +52,17 @@ public class FreteController {
 	}
 	
 	@Transactional
+	@PatchMapping("/id-entregador/{id-entregador}/id-pedido/{id-pedido}/aceito")
+	public ResponseEntity<?> atualizarParaAceitoPor(
+			@PathVariable("id-entregador")
+			Integer idDoEntregador,
+			@PathVariable("id-pedido")
+			Integer idDoPedido){
+		this.service.aceitarParaEntregaPor(idDoEntregador, idDoPedido);
+		return ResponseEntity.ok().build();
+	}
+	
+	@Transactional
 	@PatchMapping("/id/{id}/idPedido/{idPedido}/emailEntregador/{emailEntregador}/aceitoParaEntrega")
 	public ResponseEntity<?> atualizarStatusParaAceitoParaEntrega(
 			@PathVariable("id")

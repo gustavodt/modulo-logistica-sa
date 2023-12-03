@@ -75,4 +75,7 @@ public interface FreteService {
 		throw new RuntimeException("Esse método não foi implementado");
 	}
 	
+	//Aplique as validações depois que eu terminar
+	public void aceitarParaEntregaPor(Integer idDoEntregador, Integer idDoPedido);
+	
 }

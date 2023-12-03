@@ -68,5 +68,13 @@ public class FreteServiceImpl implements FreteService {
 		Preconditions.checkNotNull(fretes, "Lista de fretes vazia");
 		return fretes;
 	}
+		
+	@Override
+	public void aceitarParaEntregaPor(Integer idDoEntregador, Integer idDoPedido) {
+		Frete frete = fretesRepository.buscarPorIdPedido(idDoPedido);
+		frete.setIdEntregador(idDoEntregador);
+		frete.setStatus(Status.ACEITO_PARA_ENTREGA);
+		this.fretesRepository.save(frete);
+	}
 	
 }
