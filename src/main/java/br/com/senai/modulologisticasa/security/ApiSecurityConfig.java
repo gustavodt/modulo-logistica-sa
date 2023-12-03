@@ -71,10 +71,17 @@ public class ApiSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http		
 		.csrf(csrf -> csrf.disable())
+		.cors()
+		.configurationSource(urlBasedCorsConfigurationSource())
+		.and()
 			.authorizeHttpRequests((request) -> 
 				request
 					.requestMatchers("/auth/**")
-						.permitAll()					
+						.permitAll()
+						.requestMatchers("/frete/**")
+						.permitAll()
+						.requestMatchers("/**")
+						.permitAll()
 				.anyRequest().authenticated())			
 			.sessionManagement(manager -> 
 				manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
