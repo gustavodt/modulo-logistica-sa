@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Preconditions;
+
 import br.com.senai.modulologisticasa.service.GoogleMatrixService;
 
 @Service 
@@ -24,6 +26,10 @@ public class GoogleMatrixServiceProxy implements GoogleMatrixService{
 		requestBody.put("cepDeDestino", destino);
 		JSONObject distanciaJson = getGoogleMatrix.requestBody(
 				"direct:buscarDistancia", requestBody, JSONObject.class);
+		
+		String status = distanciaJson.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getString("status");
+		
+		Preconditions.checkArgument(status.equals("OK"), "O endereço está fora do raio de atuação");
 		
 		List<BigDecimal> distanciaTempo = new ArrayList<>();
 		

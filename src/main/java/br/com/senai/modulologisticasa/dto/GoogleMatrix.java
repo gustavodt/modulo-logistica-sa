@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class GoogleMatrix {
+	
 	@Size(max = 9, message = "O tamanho do cep deve conter 9 caracteres")
 	@NotBlank(message = "O cep de origem é obrigatório")
 	private String origem;
