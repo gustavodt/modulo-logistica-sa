@@ -11,13 +11,13 @@ import br.com.senai.modulologisticasa.service.EntregadorService;
 public class EntregadorServiceProxy implements EntregadorService {
 	
 	@Autowired
-	private ProducerTemplate getIdEntregador;
+	private ProducerTemplate toEntregadorApi;
 	
 	@Override
 	public Integer buscarIdEntregadorPor(String emailEntregador) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("email", emailEntregador);
-		JSONObject pedidoJson = getIdEntregador.requestBody(
+		JSONObject pedidoJson = toEntregadorApi.requestBody(
 				"direct:buscarIdEntregador", requestBody, JSONObject.class);
 		
 		Integer idEntregador = Integer.valueOf(pedidoJson.getInt("id"));

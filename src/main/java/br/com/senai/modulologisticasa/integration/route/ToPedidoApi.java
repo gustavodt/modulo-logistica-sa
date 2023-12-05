@@ -33,7 +33,7 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 	@Override
 	public void configure() throws Exception {
 		
-		from("direct:autenticar")
+		from("direct:autenticarPedido")
 			.doTry()
 				.setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
 				.setHeader(Exchange.CONTENT_TYPE, constant("application/json;charset=UTF-8"))
@@ -72,7 +72,7 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 		
 		from("direct:atualizarStatus")
 			.doTry()
-				.toD("direct:autenticar")
+				.toD("direct:autenticarPedido")
 				.setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PATCH))
 				.setHeader(Exchange.CONTENT_TYPE, constant("application/json;charset=UTF-8"))
 				.setHeader("Authorization", simple("Bearer ${exchangeProperty.token}"))
@@ -84,7 +84,7 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 		
 		from("direct:buscarPedido")
 			.doTry()
-				.toD("direct:autenticar")
+				.toD("direct:autenticarPedido")
 				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
 				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
 				.setHeader("Authorization", simple("Bearer ${exchangeProperty.token}"))
