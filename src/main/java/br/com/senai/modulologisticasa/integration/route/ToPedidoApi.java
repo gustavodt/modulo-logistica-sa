@@ -81,6 +81,33 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 				.setProperty("error", simple("${exception}"))
 				.process(errorProcessor)
 		.end();
+		
+		from("direct:buscarPedido")
+			.doTry()
+				.toD("direct:autenticar")
+				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
+				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
+				.setHeader("Authorization", simple("Bearer ${exchangeProperty.token}"))
+				.process(new Processor() {					
+					@Override
+					public void process(Exchange exchange) throws Exception {		
+						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
+						exchange.setProperty("idDoPedido", bodyJson.getInt("idDoPedido"));
+					}
+				})
+				.toD(urlApi + "pedidos/id/${exchangeProperty.idDoPedido}")
+				.process(new Processor() {					
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
+						exchange.getMessage().setBody(bodyJson.toString());
+					}
+				})
+			.doCatch(Exception.class)
+				.setProperty("error", simple("${exception}"))
+				.process(errorProcessor)
+		.end();	
+		
 	}
 	
 }

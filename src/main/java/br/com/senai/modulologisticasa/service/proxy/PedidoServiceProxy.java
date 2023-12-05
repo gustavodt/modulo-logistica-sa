@@ -12,13 +12,13 @@ import br.com.senai.modulologisticasa.service.PedidoService;
 public class PedidoServiceProxy implements PedidoService {
 	
 	@Autowired
-	private ProducerTemplate getPedidosAceitos;
+	private ProducerTemplate toPedidoApi;
 	
 	@Override
-	public Pedido buscarPorId(Integer idPedido) {
+	public Pedido buscarPorId(Integer idDoPedido) {
 		JSONObject requestBody = new JSONObject();
-		requestBody.put("idPedido", idPedido);
-		JSONObject pedidoJson = getPedidosAceitos.requestBody(
+		requestBody.put("idDoPedido", idDoPedido);
+		JSONObject pedidoJson = toPedidoApi.requestBody(
 				"direct:buscarPedido", requestBody, JSONObject.class);
 		
 		String cepCliente = String.valueOf(pedidoJson.getJSONObject("endereco").getString("cep"));

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public interface PedidoService {
 	
 	public Pedido buscarPorId(
-			@NotNull(message = "O id d pedido é obrigatorio")
-			Integer idPedido);
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idDoPedido);
 	
 }

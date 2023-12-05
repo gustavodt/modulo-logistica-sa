@@ -35,7 +35,7 @@ public class FreteController {
 	
 	@Autowired
 	@Qualifier("entregadorServiceProxy")
-	EntregadorService entregadorService;
+	private EntregadorService entregadorService;
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(
