@@ -21,7 +21,7 @@ public class FromGoogleMatrix extends RouteBuilder implements Serializable{
 	@Value("${url-api-google}")
 	private String urlBusca;
 	
-	@Value("${google-key}")	
+	@Value("${api-google-key}")	
 	private String token;	
 	
 	@Autowired

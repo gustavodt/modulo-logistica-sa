@@ -1,6 +1,7 @@
 
 package br.com.senai.modulologisticasa.controller;
 
+import java.math.BigDecimal;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,18 @@ public class FaixaFreteController {
 	}
 	
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> buscarPor(
+	public ResponseEntity<?> buscarPorId(
 			@PathVariable("id") 
 			Integer id) {
 		FaixaFrete FaixaFreteEncontrada = service.buscarPor(id);
+		return ResponseEntity.ok(converter.toJsonMap(FaixaFreteEncontrada));
+	}
+	
+	@GetMapping("/distancia/{distancia}")
+	public ResponseEntity<?> buscarPorDistancia(
+			@PathVariable("distancia") 
+			BigDecimal distancia) {
+		FaixaFrete FaixaFreteEncontrada = service.buscarPor(distancia);
 		return ResponseEntity.ok(converter.toJsonMap(FaixaFreteEncontrada));
 	}
 	

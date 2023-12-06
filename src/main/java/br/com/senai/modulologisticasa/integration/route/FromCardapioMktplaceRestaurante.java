@@ -18,31 +18,65 @@ public class FromCardapioMktplaceRestaurante extends RouteBuilder implements Ser
 
 	private static final long serialVersionUID = 1L;
 	
-	@Value("${url-restaurante-mktplace}")
-	private String urlBusca;
+	@Value("${url-api-mktplace}")
+	private String urlApi;
 	
-	@Value("${mktplace-key}")	
-	private String token;
+	@Value("${api-mktplace-user}")	
+	private String usuario;
+	
+	@Value("${api-mktplace-senha}")	
+	private String senha;
 	
 	@Autowired
 	private ErrorProcessor errorProcessor;
 	
 	@Override
 	public void configure() throws Exception {
-		from("direct:buscarRestaurantePor")
+		
+		from("direct:autenticarMktplace")
 			.doTry()
-				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
-				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
-				.setHeader("Authorization", simple("Bearer " + token))
-				.process(new Processor() {					
+				.setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
+				.setHeader(Exchange.CONTENT_TYPE, constant("application/json;charset=UTF-8"))
+				.process(new Processor() {
 					@Override
-					public void process(Exchange exchange) throws Exception {		
-						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("nomeRestaurante", bodyJson.getString("nomeRestaurante"));
-						exchange.setProperty("categoriaRestaurante", bodyJson.getString("categoriaRestaurante"));
+					public void process(Exchange exchange) throws Exception {
+						String bodyJson = exchange.getMessage().getBody(String.class);
+						JSONObject jsonObject = new JSONObject(bodyJson);
+						String nome = jsonObject.getString("nomeRestaurante");
+						String categoria = jsonObject.getString("categoriaRestaurante");
+						exchange.setProperty("nomeRestaurante", nome);
+						exchange.setProperty("categoriaRestaurante", categoria);
+						
+						jsonObject = new JSONObject();
+						jsonObject.put("login", usuario);
+						jsonObject.put("senha", senha);
+						
+						exchange.getMessage().setBody(jsonObject.toString());
 					}
 				})
-				.toD(urlBusca + "?nome=${exchangeProperty.nomeRestaurante}"
+				.toD(urlApi + "auth")
+				.process(new Processor() {					
+					@Override
+					public void process(Exchange exchange) throws Exception {
+						String bodyJson = exchange.getMessage().getBody(String.class);
+						JSONObject jsonObject = new JSONObject(bodyJson);
+						String token = jsonObject.getString("token");
+						exchange.setProperty("tokenMktplace", token);
+						exchange.getMessage().setBody(null);
+					}
+				})
+			.doCatch(Exception.class)
+				.setProperty("error", simple("${exception}"))
+				.process(errorProcessor)
+		.end();
+		
+		from("direct:buscarRestaurantePor")
+			.doTry()
+				.toD("direct:autenticarMktplace")
+				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
+				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
+				.setHeader("Authorization", simple("Bearer ${exchangeProperty.tokenMktplace}"))
+				.toD(urlApi + "?nome=${exchangeProperty.nomeRestaurante}"
 						+ "&id-categoria=${exchangeProperty.categoriaRestaurante}")
 				.process(new Processor() {					
 					@Override

@@ -43,9 +43,11 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 						String bodyJson = exchange.getMessage().getBody(String.class);
 						JSONObject jsonObject = new JSONObject(bodyJson);
 						Integer id = jsonObject.getInt("idDoPedido");
-						String status = jsonObject.getString("status");
 						exchange.setProperty("id", id);
-						exchange.setProperty("status", status);
+						if (bodyJson.contains("status")) {						
+							String status = jsonObject.getString("status");
+							exchange.setProperty("status", status);
+						}
 						
 						jsonObject = new JSONObject();
 						jsonObject.put("login", usuario);
@@ -88,14 +90,7 @@ public class ToPedidoApi extends RouteBuilder implements Serializable  {
 				.setHeader(Exchange.HTTP_METHOD, HttpMethods.GET)
 				.setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
 				.setHeader("Authorization", simple("Bearer ${exchangeProperty.token}"))
-				.process(new Processor() {					
-					@Override
-					public void process(Exchange exchange) throws Exception {		
-						JSONObject bodyJson = new JSONObject(exchange.getMessage().getBody(String.class));
-						exchange.setProperty("idDoPedido", bodyJson.getInt("idDoPedido"));
-					}
-				})
-				.toD(urlApi + "pedidos/id/${exchangeProperty.idDoPedido}")
+				.toD(urlApi + "pedidos/id/${exchangeProperty.id}")
 				.process(new Processor() {					
 					@Override
 					public void process(Exchange exchange) throws Exception {
