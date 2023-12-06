@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import br.com.senai.modulologisticasa.dto.ValorDoFrete;
 import br.com.senai.modulologisticasa.entity.FaixaFrete;
 import br.com.senai.modulologisticasa.entity.Frete;
+import br.com.senai.modulologisticasa.entity.enuns.Status;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
@@ -64,20 +65,36 @@ public interface FreteService {
 		throw new RuntimeException("Esse método não foi implementado");
 	}
 	
-	public void aceitarParaEntregaPor(
+	public default void aceitarParaEntregaPor(
 			@Positive(message = "O id do entregador para busca deve ser positivo")
 			@NotNull(message = "O id do entregador é obrigatório")
 			Integer idDoEntregador, 
 			@Positive(message = "O id do pedido para busca deve ser positivo")
 			@NotNull(message = "O id do pedido é obrigatório")
-			Integer idDoPedido);
+			Integer idDoPedido) {
+		throw new RuntimeException("Esse método não foi implementado");
+	}
 
-	public void confirmarEntregaPor(
+	public default void confirmarEntregaPor(
 			@Positive(message = "O id do entregador para busca deve ser positivo")
 			@NotNull(message = "O id do entregador é obrigatório")
 			Integer idDoEntregador, 
 			@Positive(message = "O id do pedido para busca deve ser positivo")
 			@NotNull(message = "O id do pedido é obrigatório")
-			Integer idDoPedido);
+			Integer idDoPedido) {
+		throw new RuntimeException("Esse método não foi implementado");
+	}
+
+	public default void atualizarFretePor(
+			@Positive(message = "O id do entregador para busca deve ser positivo")
+			@NotNull(message = "O id do entregador é obrigatório")
+			Integer idDoEntregador,
+			@Positive(message = "O id do pedido para busca deve ser positivo")
+			@NotNull(message = "O id do pedido é obrigatório")
+			Integer idDoPedido,
+			@NotNull(message = "O status é obrigatório")
+			Status status) {
+		throw new RuntimeException("Esse método não foi implementado");
+	};
 	
 }
